@@ -1,53 +1,125 @@
 {% load cart_template_tags %}
-<nav class="mb-1 navbar navbar-expand-lg navbar-dark secondary-color lighten-1">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-555"
-    aria-controls="navbarSupportedContent-555" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent-555">
-    {% if not request.user.is_authenticated %}
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/accounts/login/">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/accounts/signup/">Sign Up</a>
-      </li>
-    </ul>
-    {% else %}
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-        <a class="nav-link" href="/">Home
-        </a>
-      </li>
-        <li class="nav-item">
-        <a class="nav-link waves-effect" href="/order_summary/">{{ request.user|cart_item_count }}
-          <i class="fas fa-shopping-cart"></i>
-        </a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/customer_profile/">{{request.user}}
-          <span class="sr-only">(current)</span>
-        </a>
-      </li>
-        <li class="nav-item">
-        <a class="nav-link" href="/accounts/password/change/">Reset Password
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/accounts/logout/">Logout</a>
-      </li>
-      <li class="nav-item">
-      <a class="nav-link" href="/request_refund/">Request Refund</a>
-      </li>
-    </ul>
-    <ul class="navbar-nav ml-auto nav-flex-icons">
-      {% endif %}
-    </ul>
+{% load static %}
+<header>
+  <div class="header-container">
+      <div class="header-area header-sticky pt-10 pb-10">
+              <div class="container-fluid pl-50 pr-50">
+                  <div class="row">
+                      <!--Header Logo Start-->
+                      <div class="col-lg-3 col-md-3">
+                          <div class="logo-area">
+                              <a href="index.html">
+                                  <img src="{% static 'img/logo/logo.png' %}" alt="">
+                              </a>
+                          </div>
+                      </div>
+                      <!--Header Logo End-->
+                      <!--Header Menu And Mini Cart Start-->
+                      <div class="col-lg-9 col-md-9 text-lg-right">
+                          <!--Main Menu Area Start-->
+                          <div class="header-menu">
+                              <nav>
+                                  <ul class="main-menu">
+                                      <li><a href="/">home</a></li>
+                                      <li><a href="/shop">Shop</a></li>
+                                      <!-- <li><a href="portfolio.html">Portfolio</a></li> -->
+                                      <!-- <li><a href="blog.html">Blog</a></li> -->
+                                      <li><a href="about.html">About Us</a></li>
+                                      <li><a href="/contactus">Contact Us</a></li>
+                                  </ul>
+                              </nav>
+                          </div>
+                          <!--Main Menu Area End-->
+                          <!--Header Option Start--> 
+                          {% if request.user.is_authenticated %}
+                          <div class="header-option">
+                              <div class="mini-cart-search">
+                                  <div class="mini-cart">
+                                      <a href="#">
+                                          <span class="cart-icon">
+                                             <span class="cart-quantity">{{ request.user|cart_item_count }}</span>
+                                          </span>
+                                          <span class="cart-title">Your cart <br><strong>$190.00</strong></span> 
+                                      </a>
+                                     <!--Cart Dropdown Start-->
+                                    <div class="cart-dropdown">
+                                        <ul>
+                                            <li class="single-cart-item">
+                                                <div class="cart-img">
+                                                    <a href="single-product.html"><img src="{% static 'img/cart/cart1.jpg' %}" alt=""></a>
+                                                </div>
+                                                <div class="cart-content">
+                                                    <h5 class="product-name"><a href="single-product.html">Odio tortor consequat</a></h5>
+                                                    <span class="cart-price">1 × $90.00</span>
+                                                </div>
+                                                <div class="cart-remove">
+                                                    <a title="Remove" href="#"><i class="fa fa-times"></i></a>
+                                                </div>
+                                            </li>
+                                            <li class="single-cart-item">
+                                                <div class="cart-img">
+                                                    <a href="single-product.html"><img src="{% static 'img/cart/cart2.jpg' %}" alt=""></a>
+                                                </div>
+                                                <div class="cart-content">
+                                                    <h5 class="product-name"><a href="single-product.html">Auctor sem</a></h5>
+                                                    <span class="cart-price">1 × $100.00</span>
+                                                </div>
+                                                <div class="cart-remove">
+                                                    <a title="Remove" href="#"><i class="fa fa-times"></i></a>
+                                                </div>
+                                            </li>
+                                         </ul> 
+                                        <p class="cart-subtotal"><strong>Subtotal:</strong> <span class="float-right">$190.00</span></p> 
+                                        <p class="cart-btn">
+                                            <a href="/order_summary">View cart</a>
+                                            <a href="/checkout">Checkout</a>
+                                        </p>
+                                    </div>
+                                     <!--Cart Dropdown End--> 
+                                  </div>
+                                  <div class="header-search">
+                                      <div class="search-box">
+                                          <a href="#"><i class="fa fa-search"></i></a>
+                                          <div class="search-dropdown">
+                                              <form action="#">
+                                                  <input name="search" id="search" placeholder="" value="Search product..." onblur="if(this.value==''){this.value='Search product...'}" onfocus="if(this.value=='Search product...'){this.value=''}" type="text">
+                                                  <button type="submit"><i class="fa fa-search"></i></button>
+                                              </form>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="currency">
+                                      <div class="currency-box">
+                                          <a href="#"><i class="fa fa-th"></i></a>
+                                          <div class="currency-dropdown">
+                                              <ul class="menu-top-menu">
+                                                  <li><a href="/account">My Account</a></li>
+                                                  <li><a href="/wishlist">Wishlist</a></li>
+                                                  <li><a href="/order_summary">Shopping cart</a></li>
+                                                  <li><a href="/checkout">Checkout</a></li>
+                                                  <li><a href="/accounts/logout/">Log Out</a></li>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          {% else %}
+
+                          {% endif %}
+                          <!--Header Option End--> 
+                      </div>
+                      <!--Header Menu And Mini Cart End-->
+                  </div>
+                  <div class="row">
+                      <div class="col-12"> 
+                          <!--Mobile Menu Area Start-->
+                          <div class="mobile-menu d-lg-none"></div>
+                          <!--Mobile Menu Area End-->
+                      </div>
+                  </div>
+              </div>
+          </div>
   </div>
-</nav>
+</header>
+

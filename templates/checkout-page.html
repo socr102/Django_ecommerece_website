@@ -2,186 +2,351 @@
 {% block content %}
 {% load crispy_forms_tags %}
 
-<main >
-  <div class="container wow fadeIn">
-    <h2 class="my-5 h2 text-left">Checkout form</h2>
-    <div class="row">
-      <div class="col-md-8 mb-4">
-        <div class="card">
-          <form method="POST" class="card-body">
-            {% csrf_token %}
-            <!--Shipping Information Fill Up-->
-            <h3>Shipping address</h3>
-
-            <div class='hideable_shipping_form'>
-
-              <div class="md-form mb-5">
-                <input type='text' placeholder='1234 Main St' id='shipping_address' name='shipping_address' class='form-control' />
-                <label for="shipping_address" class="">Address</label>
+<!--Breadcrumb Tow Start-->
+<div class="breadcrumb-tow-checkout mb-120">
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="breadcrumb-title">
+                  <!-- <h1>Checkout</h1> -->
               </div>
-
-              <div class="md-form mb-5">
-                <input type='text' placeholder='Apartment or suite' id='shipping_address2' name='shipping_address2' class='form-control' />
-                <label for="shipping_address2" class="">Address 2 (optional)</label>
+              <div class="breadcrumb-content breadcrumb-content-tow">
+                  <ul>
+                      <li><a href="/">Home</a></li>
+                      <li class="active">Checkout</li>
+                  </ul>
               </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-12 mb-4">
-                  <label for="country">Country</label>
-                  {{ form.shipping_country }}
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                  <label for="shipping_zip">Zip</label>
-                  <input type='text' placeholder='Zip code' id='shipping_zip' name='shipping_zip' class='form-control' />
-                  <div class="invalid-feedback">
-                    Zip code required.
-                  </div>
-                </div>
-              </div>
-
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="same_billing_address" id="same_billing_address">
-                <label class="custom-control-label" for="same_billing_address">Billing address is the same as my shipping address</label>
-              </div>
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="set_default_shipping" id="set_default_shipping">
-                <label class="custom-control-label" for="set_default_shipping">Save as default shipping address</label>
-              </div>
-
-            </div>
-
-            {% if default_shipping_address %}
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" name="use_default_shipping" id="use_default_shipping">
-              <label class="custom-control-label" for="use_default_shipping">Use default shipping address: {{ default_shipping_address.street_address|truncatechars:10 }}</label>
-            </div>
-            {% endif %}
-
-            <hr>
-            <!--Billing Information Fill Up-->
-            <h3>Billing address</h3>
-
-            <div class='hideable_billing_form'>
-              <div class="md-form mb-5">
-                <input type='text' placeholder='1234 Main St' id='billing_address' name='billing_address' class='form-control' />
-                <label for="billing_address" class="">Address</label>
-              </div>
-
-              <div class="md-form mb-5">
-                <input type='text' placeholder='Apartment or suite' id='billing_address2' name='billing_address2' class='form-control' />
-                <label for="billing_address2" class="">Address 2 (optional)</label>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-12 mb-4">
-                  <label for="country">Country</label>
-                  {{ form.billing_country }}
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                  <label for="billing_zip">Zip</label>
-                  <input type='text' placeholder='Zip code' id='billing_zip' name='billing_zip' class='form-control' />
-                  <div class="invalid-feedback">
-                    Zip code required.
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" name="set_default_billing" id="set_default_billing">
-                <label class="custom-control-label" for="set_default_billing">Save as default billing address</label>
-              </div>
-
-            </div>
-
-            {% if default_billing_address %}
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" name="use_default_billing" id="use_default_billing">
-              <label class="custom-control-label" for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
-            </div>
-            {% endif %}
-            <hr>
-
-            <!--Payment Information Fill Up-->
-            <h3>Payment option</h3>
-
-            <div class="d-block my-3">
-              {% for value, name in form.fields.payment_option.choices %}
-              <div class="custom-control custom-radio">
-                <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
-                <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
-              </div>
-              {% endfor %}
-            </div>
-
-            <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
-
-          </form>
-
-        </div>
-
+          </div>
       </div>
-
-      <div class="col-md-4 mb-4">
-        {% include "order_snippet.html" %}
-      </div>
-
-    </div>
-
   </div>
-</main>
+</div>
+<!--Breadcrumb Tow End-->
+<!--Checkout Area Strat-->
+<div class="checkout-area mb-80">
+<div class="container">
+  <div class="row">
+          <div class="col-12">
+              <div class="coupon-accordion">
+                  <!--Accordion Start-->
+                  <h3>Returning customer? <span id="showlogin">Click here to login</span></h3>
+                  <div id="checkout-login" class="coupon-content">
+                      <div class="coupon-info">
+                          <p class="coupon-text">Quisque gravida turpis sit amet nulla posuere lacinia. Cras sed est sit amet ipsum luctus.</p>
+                          <form action="#">
+                              <p class="form-row-first">
+                                  <label>Username or email <span class="required">*</span></label>
+                                  <input type="text">
+                              </p>
+                              <p class="form-row-last">
+                                  <label>Password  <span class="required">*</span></label>
+                                  <input type="text">
+                              </p>
+                              <p class="form-row">
+                                  <input value="Login" type="submit">
+                                  <label>
+                                      <input type="checkbox">
+                                       Remember me 
+                                  </label>
+                              </p>
+                              <p class="lost-password"><a href="#">Lost your password?</a></p>
+                          </form>
+                      </div>
+                  </div>
+                  <!--Accordion End-->
+                  <!--Accordion Start-->
+                  <h3>Have a coupon? <span id="showcoupon">Click here to enter your code</span></h3>
+                  <div id="checkout_coupon" class="coupon-checkout-content">
+                      <div class="coupon-info">
+                          <form action="#">
+                              <p class="checkout-coupon">
+                                  <input placeholder="Coupon code" type="text">
+                                  <input value="Apply Coupon" type="submit">
+                              </p>
+                          </form>
+                      </div>
+                  </div>
+                  <!--Accordion End-->
+              </div>
+          </div>
+  </div>
+  <div class="row">
+      <div class="col-lg-6 col-12">
+          <form action="#">
+              <div class="checkbox-form">
+                  <h3>Billing Details</h3>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="country-select clearfix">
+                              <label>Country <span class="required">*</span></label>
+                              <select class="wide">
+                                        <option value="volvo">bangladesh</option>
+                                        <option value="saab">Algeria</option>
+                                        <option value="mercedes">Afghanistan</option>
+                                        <option value="audi">Ghana</option>
+                                        <option value="audi2">Albania</option>
+                                        <option value="audi3">Bahrain</option>
+                                        <option value="audi4">Colombia</option>
+                                        <option value="audi5">Dominican Republic</option>
+                                 </select>
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="checkout-form-list">
+                              <label>First Name <span class="required">*</span></label>
+                              <input placeholder="" type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="checkout-form-list">
+                              <label>Last Name <span class="required">*</span></label>
+                              <input placeholder="" type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="checkout-form-list">
+                              <label>Company Name</label>
+                              <input placeholder="" type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="checkout-form-list">
+                              <label>Address <span class="required">*</span></label>
+                              <input placeholder="Street address" type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="checkout-form-list">
+                              <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                              <div class="checkout-form-list">
+                                  <label>Town / City <span class="required">*</span></label>
+                              <input type="text">
+                              </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="checkout-form-list">
+                              <label>State / County <span class="required">*</span></label>
+                              <input placeholder="" type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="checkout-form-list">
+                              <label>Postcode / Zip <span class="required">*</span></label>
+                              <input placeholder="" type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="checkout-form-list">
+                              <label>Email Address <span class="required">*</span></label>
+                              <input placeholder="" type="email">
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="checkout-form-list">
+                              <label>Phone  <span class="required">*</span></label>
+                              <input type="text">
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                          <div class="checkout-form-list create-acc">
+                              <input id="cbox" type="checkbox">
+                              <label>Create an account?</label>
+                          </div>
+                          <div id="cbox-info" class="checkout-form-list create-account">
+                              <p>Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
+                              <label>Account password  <span class="required">*</span></label>
+                              <input placeholder="password" type="password">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="different-address">
+                      <div class="ship-different-title">
+                          <h3>
+                                  <label>Ship to a different address?</label>
+                                  <input id="ship-box" type="checkbox">
+                              </h3>
+                      </div>
+                      <div id="ship-box-info" class="row">
+                          <div class="col-md-12">
+                                  <div class="country-select clearfix">
+                                      <label>Country <span class="required">*</span></label>
+                                      <select class="wide">
+                                            <option value="volvo">bangladesh</option>
+                                            <option value="saab">Algeria</option>
+                                            <option value="mercedes">Afghanistan</option>
+                                            <option value="audi">Ghana</option>
+                                            <option value="audi2">Albania</option>
+                                            <option value="audi3">Bahrain</option>
+                                            <option value="audi4">Colombia</option>
+                                            <option value="audi5">Dominican Republic</option>
+                                     </select>
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>First Name <span class="required">*</span></label>
+                                      <input placeholder="" type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>Last Name <span class="required">*</span></label>
+                                      <input placeholder="" type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>Company Name</label>
+                                      <input placeholder="" type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>Address <span class="required">*</span></label>
+                                      <input placeholder="Street address" type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>Town / City <span class="required">*</span></label>
+                                      <input type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>State / County <span class="required">*</span></label>
+                                      <input placeholder="" type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>Postcode / Zip <span class="required">*</span></label>
+                                      <input placeholder="" type="text">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>Email Address <span class="required">*</span></label>
+                                      <input placeholder="" type="email">
+                                  </div>
+                              </div>
+                              <div class="col-md-12">
+                                  <div class="checkout-form-list">
+                                      <label>Phone  <span class="required">*</span></label>
+                                      <input type="text">
+                                  </div>
+                              </div>
+                      </div>
+                      <div class="order-notes">
+                          <div class="checkout-form-list">
+                              <label>Order Notes</label>
+                              <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </div>
+      <div class="col-lg-6 col-12">
+          <div class="your-order">
+              <h3>Your order</h3>
+              <div class="your-order-table table-responsive">
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th class="cart-product-name">Product</th>
+                              <th class="cart-product-total">Total</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr class="cart_item">
+                            <td class="cart-product-name"> Vestibulum suscipit<strong class="product-quantity"> × 1</strong></td>
+                            <td class="cart-product-total"><span class="amount">£165.00</span></td>  
+                          </tr>
+                          <tr class="cart_item">
+                            <td class="cart-product-name"> Vestibulum suscipit<strong class="product-quantity"> × 1</strong></td>
+                            <td class="cart-product-total"><span class="amount">£165.00</span></td>  
+                          </tr>
+                      </tbody>
+                      <tfoot>
+                          <tr class="cart-subtotal">
+                              <th>Cart Subtotal</th>
+                              <td><span class="amount">£215.00</span></td>
+                          </tr>
+                          <tr class="order-total">
+                              <th>Order Total</th>
+                              <td><strong><span class="amount">£215.00</span></strong></td>
+                          </tr>
+                      </tfoot>
+                  </table>
+              </div>
+              <div class="payment-method">
+                  <div class="payment-accordion">
+                      <div id="accordion">
+                            <div class="card">
+                              <div class="card-header" id="#payment-1">
+                                <h5 class="panel-title">
+                                  <a class="" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Direct Bank Transfer.
+                                  </a>
+                                </h5>
+                              </div>
+                              <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                                <div class="card-body">
+                                  <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header" id="#payment-2">
+                                <h5 class="panel-title">
+                                  <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Cheque Payment
+                                  </a>
+                                </h5>
+                              </div>
+                              <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                                <div class="card-body">
+                                  <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card">
+                              <div class="card-header" id="#payment-3">
+                                <h5 class="panel-title">
+                                  <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    PayPal
+                                  </a>
+                                </h5>
+                              </div>
+                              <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                                <div class="card-body">
+                                  <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="order-button-payment">
+                              <input value="Place order" type="submit">
+                          </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+<!--Checkout Area End-->
   
 {% endblock %}
 
-  {% block extra_scripts %}
-  <script>
-    const hideable_shipping_form = $(".hideable_shipping_form")
-    const hideable_billing_form = $(".hideable_billing_form")
-    const use_default_shipping = document.querySelector("input[name=use_default_shipping")
-    const use_default_billing = document.querySelector("input[name=use_default_billing]")
-    const same_billing_address = document.querySelector("input[name=same_billing_address]")
-    if(use_default_shipping){
-      use_default_shipping.addEventListener(
-      'change', function() {
-        if(this.checked){
-          hideable_shipping_form.hide()
-        }
-        else{
-          hideable_shipping_form.show()
-        }
-      }
-    )
-    }
-    if(use_default_billing){
-      use_default_billing.addEventListener(
-      'change', function() {
-        if(this.checked){
-          hideable_billing_form.hide()
-        }
-        else{
-          hideable_billing_form.show()
-        }
-      }
-    )
-    }
+{% block extra_scripts %}
 
-    same_billing_address.addEventListener(
-      'change', function() {
-        if(this.checked){
-          hideable_billing_form.hide()
-        }
-        else{
-          hideable_billing_form.show()
-        }
-      }
-    )
-  </script>
 {% endblock extra_scripts %}

@@ -31,6 +31,7 @@ class HomeView(ListView):
     paginate_by = 8
     ordering = '-id'
 
+    print(model)
     def get_queryset(self):
         queryset = Item.objects.all()
         category = self.kwargs.get('category_name')
@@ -540,7 +541,12 @@ class CustomerProfileView(LoginRequiredMixin, View):
             messages.info(self.request, "You have not yet ordered anything from our site")
             return redirect("/")
 
-
+class ShopView(LoginRequiredMixin, View):
+    def get(self, slug, *args, **kwargs):
+        return render(self.request, 'shop.html')
+class ContactUsView(LoginRequiredMixin, View):
+    def get(self, slug, *args, **kwargs):
+        return render(self.request, 'contactus.html')    
 class SSLPayment(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         order = Cart.objects.get(user=self.request.user, ordered=False)
