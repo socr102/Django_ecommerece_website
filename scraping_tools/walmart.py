@@ -25,18 +25,27 @@ options.add_argument('--ignore-certificate-errors')
 options.add_argument('--ignore-ssl-errors')
 options.add_argument("--ignore-certificate-errors-spki-list")
 driver = webdriver.Chrome(chrome_options=options)# get chromeDriver
-# driver.set_window_size(960, 640)
+
+print("set the size of the window")
+driver.set_window_size(1366,768)
+
 dataFrame = pd.DataFrame()# set dataFrame variable
 data_array = []
 driver.get("https://www.walmart.com/")# set url
+
 try:# wait for new window
     WebDriverWait(driver, 120).until(EC.visibility_of_element_located((By.ID,"e9951ce6-c8ae-4305-a36b-4585b234ddf2-expander")))
     print('waiting done')
 except TimeoutException:
     print('network error')
+
+
 categories = driver.find_element_by_id('e9951ce6-c8ae-4305-a36b-4585b234ddf2-expander').find_elements_by_class_name('TempoCategoryTile')
+print("categories->",categories)
+
 home_page_url = driver.current_url
 print(len(categories))
+
 for i in range(len(categories)):
     if i == 0:
         continue

@@ -7,3 +7,7 @@ requests
 stripe==2.48.0
 python-decouple==3.3
 sslcommerz-python==0.0.7
+mysqlclient
+selenium
+pandas
+mysql-connector

@@ -25,6 +25,69 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class dolloarCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.category
+        })
+
+class dolloarItem(models.Model):
+    display_name = models.CharField(max_length = 255, default = "")
+    product_id = models.CharField(max_length = 255, default  = "")
+    category = models.ForeignKey(dolloarCategory, on_delete=models.CASCADE)
+    product_images = models.CharField(max_length = 255, default = "")
+    product_full_name = models.CharField(max_length = 255, default = "")
+    product_case_price = models.FloatField()
+    product_unit_price = models.FloatField()
+    product_speciation = models.CharField(max_length = 255, default = "")
+    related_product_ID = models.CharField(max_length = 255, default = "")
+    product_specificaions = models.CharField(max_length = 255, default = "")
+
+    def __str__(self):
+        return self.display_name
+
+class canadiantireCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.category
+        })
+        
+
+class walmartCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.category
+        })
+
+class targetCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.category
+        })
 
 class Category(models.Model):
     category = models.CharField(max_length=30)
