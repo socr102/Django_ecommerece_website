@@ -1,16 +1,15 @@
 from django.urls import path
 
-from .views import (HomeView, ShopView,ItemDetailView, add_to_cart, remove_from_the_cart, OrderSummary,
-                    remove_single_from_the_cart, CheckoutView, PaymentView, AddCouponView,
-                    RequestRefundView, add_likes_to_product, CustomerProfileView, add_comment_to_item,
-                    SSLPayment, complete, complete_payment, ContactUsView)
+from .views import *
 
 app_name = 'core'
 
 urlpatterns = [
-     path('',
-          HomeView.as_view(), name='item_list'),
-     path('shop/',ShopView.as_view(), name='shop'),
+     path('',HomeView.as_view(), name='item_list'),
+     path('shop/<shop_id>/',ShopView.as_view(), name='shop'),
+     path('shop/<shop_id>/<category_name>/',ShopView.as_view(), name='item_list_by_category'),
+     path('shop/<shop_id>/<category_name>/<page>',ShopView.as_view(), name='item_list_by_category'),
+
      path('item_list/<category_name>/',
           HomeView.as_view(), name='item_list_by_category'),
      path('checkout/',

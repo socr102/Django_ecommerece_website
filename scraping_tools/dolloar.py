@@ -23,7 +23,7 @@ def closeDriver(driver):# function that driver exit
 conn = None
 try:
     conn = mysql.connector.connect(host='localhost',
-                                   database='ecommerce',
+                                   database='shop',
                                    user='root',
                                    password='')
     if conn.is_connected():
@@ -121,20 +121,20 @@ try:
                         product_specificaions.append({th:td})
                 except NoSuchElementException:
                     print('No element');                
-                select_query = """SELECT id FROM dollarama WHERE product_id = %s"""
+                select_query = """SELECT id FROM core_dolloaritem WHERE product_id = %s"""
                 cursor.execute(select_query,(product_id,))
                 product_record = cursor.fetchone()
                 
                 if product_record == None:
                     data_array = []
                     data_array.append((display_name,product_id,category_id,str(product_images), product_full_name, str(product_case_price), str(product_unit_price), str(product_speciation), str(related_product_ID), str(product_specificaions)))
-                    query = """INSERT INTO dollarama (display_name, product_id, category_id, product_images, product_full_name, product_case_price, product_unit_price, product_speciation, related_product_ID, product_specificaions) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+                    query = """INSERT INTO core_dolloaritem(display_name, product_id, category_id, product_images, product_full_name, product_case_price, product_unit_price, product_speciation, related_product_ID, product_specificaions) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
                     cursor.executemany(query, data_array)
                     data_array = []
                 else:
                     update_data_array = ()
                     update_data_array = (display_name,category_id,str(product_images), product_full_name, str(product_case_price), str(product_unit_price), str(product_speciation), str(related_product_ID), str(product_specificaions), product_id)
-                    query = """UPDATE dollarama SET display_name = %s, category_id = %s, product_images = %s, product_full_name = %s, product_case_price = %s, product_unit_price = %s, product_speciation = %s, related_product_ID = %s, product_specificaions = %s WHERE product_id = %s """
+                    query = """UPDATE core_dolloaritem SET display_name = %s, category_id = %s, product_images = %s, product_full_name = %s, product_case_price = %s, product_unit_price = %s, product_speciation = %s, related_product_ID = %s, product_specificaions = %s WHERE product_id = %s """
                     cursor.execute(query, update_data_array)
                     update_data_array = ()
                 conn.commit()

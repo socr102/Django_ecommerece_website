@@ -10,29 +10,16 @@
                 <!--Product Category Widget Start-->
                 <div class="shop-sidebar">
                     <h4>Product Categories</h4>
-                    <div class="categori-checkbox">
-                        <form action="#">
+                    <div  id = "tree" class="categori-checkbox">
+
+                        <!-- <form action="#">
                             {% csrf_token %}
                             <ul>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Accessories</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Clothings</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Dress</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Drink</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Fashion</a><span class="count">(11)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Food </a><span class="count">(13)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Men </a><span class="count">(7)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Short</a><span class="count">(24)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Women</a><span class="count">(9)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Food </a><span class="count">(13)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Men </a><span class="count">(7)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Short</a><span class="count">(24)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Women</a><span class="count">(9)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Clothings</a><span class="count">(29)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Dress</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Drink</a><span class="count">(2)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Fashion</a><span class="count">(11)</span></li>
+                                {% for category in Categories %}
+                                <li><input name="product-categori" type="checkbox"><a href="/shop/0/{{category.name}}">{{category.name}}</a><span class="count">(14)</span></li>
+                                {% endfor %}
                             </ul>
-                        </form>
+                        </form> -->
                     </div>
                 </div>
                 <!--Product Category Widget End-->
@@ -203,12 +190,13 @@
                             <div id="grid" class="tab-pane fade show active">
                                 <div class="product-grid-view">
                                     <div class="row">
+                                        {% for product in object_list %}
                                         <div class="col-md-4">
                                             <!--Single Product Start-->
                                             <div class="single-product mb-25">
                                                 <div class="product-img img-full">
                                                     <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product1.jpg' %}" alt="">
+                                                        <img src=" {{product.product_images}}" alt="{{product.display_name}}" style="width:70%;height:70%">
                                                     </a>
                                                     <span class="onsale">Sale!</span>
                                                     <div class="product-action">
@@ -219,11 +207,12 @@
                                                         </ul>
                                                     </div>
                                                 </div>
+
                                                 <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Eleifend quam</a></h2>
+                                                    <h2><a href="/products/Sofa-Sets/">{{product.display_name}}</a></h2>
                                                     <div class="product-price">
                                                         <div class="price-box">
-                                                            <span class="regular-price">$115.00</span>
+                                                            <span class="regular-price">{{product.product_case_price}}$/unit</span>
                                                         </div>
                                                         <div class="add-to-cart">
                                                             <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
@@ -233,432 +222,13 @@
                                             </div>
                                             <!--Single Product End-->
                                         </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product2.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquam lobortis</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="price">$148.00</span>
-                                                            <span class="regular-price">$145.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product24.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquam sit amet</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="price">$110.00</span>
-                                                            <span class="regular-price">$90.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product23.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquet auctor sem</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$80.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product22.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquet auctor sem</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$115.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product1.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Eleifend quam</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$115.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product23.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Condimentum posuere</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$120.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product20.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Convallis furniture</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$75.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product19.jpg' %}" alt="">
-                                                    </a>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Eleifend quam</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$95.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product18.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Curabitur a purus</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$82.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product17.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Diam vel neque</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$40.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product16.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Dignissim furniture</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$80.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product15.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Dignissim venenatis</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$70.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product14.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Auctor sem</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$100.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <!--Single Product Start-->
-                                            <div class="single-product mb-25">
-                                                <div class="product-img img-full">
-                                                    <a href="/products/Sofa-Sets/">
-                                                        <img src="{% static 'img/product/product1.jpg' %}" alt="">
-                                                    </a>
-                                                    <span class="onsale">Sale!</span>
-                                                    <div class="product-action">
-                                                        <ul>
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">Convallis quam sit</a></h2>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$130.00</span>
-                                                        </div>
-                                                        <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single Product End-->
-                                        </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
                             <div id="list" class="tab-pane fade">
                                 <div class="product-list-view">
+                                    {% for product in object_list %}
                                     <div class="product-list-item mb-40">
                                         <div class="row">
                                             <!--Single List Product Start-->
@@ -666,7 +236,7 @@
                                                 <div class="single-product">
                                                     <div class="product-img img-full">
                                                         <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product9.jpg' %}" alt="">
+                                                            <img src="{{product.product_images}}" alt="">
                                                         </a>
                                                         <span class="onsale">Sale!</span>
                                                     </div>
@@ -674,21 +244,21 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquam furniture</a></h2>
+                                                    <h2><a href="/products/Sofa-Sets/">{{product.display_name}}</a></h2>
                                                     <div class="product-reviews">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
+                                                        <i class="fa fa-star"></i>
                                                     </div>
                                                     <div class="product-description">
                                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
                                                     </div>
                                                     <div class="product-price">
                                                         <div class="price-box">
-                                                            <span class="price">$125.00</span>
-                                                            <span class="regular-price">$115.00</span>
+                                                            <span class="regular-price">Case : {{product.product_case_price}}$</span>
+                                                            <span class="regular-price">Unit : {{product.product_unit_price}}$</span>
                                                         </div>
                                                     </div>
                                                     <div class="product-list-action">
@@ -706,620 +276,32 @@
                                             <!--Single List Product End-->
                                         </div>
                                     </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product14.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquam sit amet</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="price">$100.00</span>
-                                                            <span class="regular-price">$90.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product15.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquam sit amet</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$90.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product10.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Aliquet auctor sem</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="price">$75.00</span>
-                                                            <span class="regular-price">$50.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product16.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Auctor gravida enim</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="price">$85.00</span>
-                                                            <span class="regular-price">$60.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product7.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Auctor sem</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$100.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product2.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Commodo dolor</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$80.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product18.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Condimentum furniture</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$115.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product19.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Condimentum posuere</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="price">$125.00</span>
-                                                            <span class="regular-price">$115.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product3.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Convallis furniture</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$75.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product20.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Convallis quam sit</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$95.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product21.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Curabitur a purus</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$115.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product1.jpg' %}" alt="">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Diam vel neque</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="regular-price">$40.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
-                                    <div class="product-list-item mb-40">
-                                        <div class="row">
-                                            <!--Single List Product Start-->
-                                            <div class="col-md-4">
-                                                <div class="single-product">
-                                                    <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{% static 'img/product/product23.jpg' %}" alt="">
-                                                        </a>
-                                                        <span class="onsale">Sale!</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">Dignissim furniture</a></h2>
-                                                    <div class="product-reviews">
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star"></i>
-                                                        <i class="fa fa-star-o"></i>
-                                                    </div>
-                                                    <div class="product-description">
-                                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce posuere metus vitae arcu imperdiet, id aliquet ante scelerisque. Sed sit amet sem vitae urna fringilla tempus.</p>
-                                                    </div>
-                                                    <div class="product-price">
-                                                        <div class="price-box">
-                                                            <span class="price">$175.00</span>
-                                                            <span class="regular-price">$150.00</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-list-action">
-                                                       <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
-                                                        </div>
-                                                        <ul class="tool-list-action">
-                                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--Single List Product End-->
-                                        </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <!--Pagination Start-->
-                            <div class="product-pagination">
-                                <ul>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                                </ul>
+                            <div >
+                                {% if is_paginated %}
+                                  <ul class="pagination">
+                                    {% if page_obj.has_previous %}
+                                      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                                    {% else %}
+                                      <li class="disabled"><span>&laquo;</span></li>
+                                    {% endif %}
+                                    {% for i in paginator.page_range %}
+                                      {% if page_obj.number == i %}
+                                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                      {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                      {% endif %}
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                                    {% else %}
+                                      <li class="disabled"><span>&raquo;</span></li>
+                                    {% endif %}
+                                  </ul>
+                                {% endif %}
                             </div>
                             <!--Pagination End-->
                         </div>
@@ -1330,5 +312,17 @@
         </div>
     </div>
 </div>
+
 <!--Shop Area End-->
+
+<script>
+
+    $('#tree').treeview({data: "{{tree}}"});
+</script>
+{% endblock %}
+
+{% block extra_scripts %}
+    <!-- <script>
+        $('#tree').treeview({data: "{{Tree}}"});
+    </script> -->
 {% endblock %}

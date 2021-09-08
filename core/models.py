@@ -25,6 +25,100 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
+class dolloarCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name+" : "+str(self.parentid)
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.name
+        })
+
+class dolloarItem(models.Model):
+    display_name = models.CharField(max_length = 255, default = "")
+    product_id = models.CharField(max_length = 255, default  = "")
+    category = models.ForeignKey(dolloarCategory, on_delete=models.CASCADE)
+    product_images = models.CharField(max_length = 255, default = "")
+    product_full_name = models.CharField(max_length = 255, default = "")
+    product_case_price = models.FloatField()
+    product_unit_price = models.FloatField()
+    product_speciation = models.CharField(max_length = 255, default = "")
+    related_product_ID = models.CharField(max_length = 255, default = "")
+    product_specificaions = models.CharField(max_length = 255, default = "")
+
+    def __str__(self):
+        return self.display_name
+
+    def get_images(self):
+        return self.product_images
+
+    def get_absolute_url(self):
+        return reverse('core:products', kwargs={
+            'slug': self.slug
+        })
+
+    def get_add_to_cart(self):
+        return reverse('core:add_to_cart', kwargs={
+            'slug': self.slug
+        })
+
+    def remove_from_the_cart(self):
+        return reverse('core:remove_from_the_cart', kwargs={
+            'slug':self.slug
+        })
+
+class canadiantireCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.name
+        })
+        
+
+class walmartCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.name
+        })
+
+class targetCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.name
+        })
+
+
+class costcoCategory(models.Model):
+    parentid = models.IntegerField(default = 1)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("core:item_list_by_category", kwargs={
+            "category_name": self.name
+        })
 
 class Category(models.Model):
     category = models.CharField(max_length=30)

@@ -29,10 +29,13 @@
     
         {% include 'footer.html' %}
       </div>
-        {% include 'script.html' %}
 
         {% block extra_scripts %}
-        {% endblock extra_scripts %}
+        {% endblock %}
+
+        {% include 'script.html' %}
+
+       
 
     </body>
 </html>

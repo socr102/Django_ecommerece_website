@@ -1,8 +1,11 @@
 from django.contrib import admin
-from .models import (Item, OrderItem, Cart, Address, Category, Comment,
-                     Payment, Coupon, Refund, UserProfile)
+from .models import *
 
 admin.site.register(UserProfile)
+admin.site.register(dolloarCategory)
+admin.site.register(dolloarItem)
+admin.site.register(canadiantireCategory)
+admin.site.register(walmartCategory)
 admin.site.register(Item)
 admin.site.register(Category)
 
