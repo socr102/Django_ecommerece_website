@@ -556,7 +556,24 @@ class ShopView(ListView):
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
 		context['Categories'] = dolloarCategory.objects.all()
-		print(context)
+		Tree = []
+		parents = dolloarCategory.objects.filter(parentid = 0)
+		for parent in parents:
+			tree = {}
+			children = dolloarCategory.objects.filter(parentid=parent.id)
+			tree['text'] = parent.name
+			tree['id'] = parent.parentid
+			if children:
+				node = []
+				for child in children:
+					leaf = {}
+					leaf['text'] = child.name
+					leaf['id'] = child.id
+					node.append(leaf)
+				tree['nodes'] = node	
+			Tree.append(tree)	
+		context['tree'] = Tree
+						
 		return context	
 
 

@@ -30,7 +30,7 @@ class dolloarCategory(models.Model):
     name = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.name
+        return self.name+" : "+str(self.parentid)
 
     def get_absolute_url(self):
         return reverse("core:item_list_by_category", kwargs={
@@ -54,7 +54,7 @@ class dolloarItem(models.Model):
 
     def get_images(self):
         return self.product_images
-        
+
     def get_absolute_url(self):
         return reverse('core:products', kwargs={
             'slug': self.slug
