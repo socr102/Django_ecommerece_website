@@ -178,7 +178,7 @@
                                      <option value="Price, high to low">Price, high to low</option>
                                  </select>
                              </div>
-                             <p class="show-product">Showing 1–9 of 42 results</p>
+                             <p class="show-product">Showing {% block count %} {{paginate}} {% endblock count %}  of {% block total %}{{total}}{% endblock total %} results</p>
                          </div>
                          <!--Toolbar Short Area End-->
                     </div>
