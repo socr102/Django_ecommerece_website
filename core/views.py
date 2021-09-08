@@ -545,25 +545,18 @@ class CustomerProfileView(LoginRequiredMixin, View):
 			return redirect("/")
 
 class ShopView(ListView):
-	model = dolloarCategory
+	model = dolloarItem
 	template_name = "shop.html"
-	paginate_by = 15
+	paginate_by = 21
 	ordering = '-id'
 	def get_queryset(self):
-		queryset = dolloarCategory.objects.all()
+		queryset = dolloarItem.objects.all()
 		return queryset.order_by('id')
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		#q = self.request.GET.get("browse")
-		#queryset = dolloarCategory.objects.filter(parentid=0)
-		#context['categories'] = queryset
-		context['products'] = dolloarItem.objects.all()
-		images = []
-		for image in context['products']:	
-			images.append(image.get_images().split(',')[0][2:][:-1])
-		context['images'] = images
-		context['total'] = len(context['products'])
+		context['Categories'] = dolloarCategory.objects.all()
+		print(context)
 		return context	
 
 

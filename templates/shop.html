@@ -14,24 +14,8 @@
                         <form action="#">
                             {% csrf_token %}
                             <ul>
-                                {% for category in object_list %}
+                                {% for category in Categories %}
                                 <li><input name="product-categori" type="checkbox"><a href="/shop/0/{{category.name}}">{{category.name}}</a><span class="count">(14)</span></li>
-                                <!-- <li><input name="product-categori" type="checkbox"><a href="#">Clothings</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Dress</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Drink</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Fashion</a><span class="count">(11)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Food </a><span class="count">(13)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Men </a><span class="count">(7)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Short</a><span class="count">(24)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Women</a><span class="count">(9)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Food </a><span class="count">(13)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Men </a><span class="count">(7)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Short</a><span class="count">(24)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Women</a><span class="count">(9)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Clothings</a><span class="count">(29)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Dress</a><span class="count">(14)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Drink</a><span class="count">(2)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Fashion</a><span class="count">(11)</span></li> -->
                                 {% endfor %}
                             </ul>
                         </form>
@@ -205,7 +189,7 @@
                             <div id="grid" class="tab-pane fade show active">
                                 <div class="product-grid-view">
                                     <div class="row">
-                                        {% for product in products %}
+                                        {% for product in object_list %}
                                         <div class="col-md-4">
                                             <!--Single Product Start-->
                                             <div class="single-product mb-25">
@@ -896,14 +880,35 @@
                             </div>
                             <!--Pagination Start-->
                             <div class="product-pagination">
-                                <ul>
+                                <!-- <ul>
                                     <li class="active"><a href="#">1</a></li>
                                     <li><a href="#">2</a></li>
                                     <li><a href="#">3</a></li>
                                     <li><a href="#">4</a></li>
                                     <li><a href="#">5</a></li>
                                     <li><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
-                                </ul>
+                                </ul> -->
+                                {% if is_paginated %}
+                                  <ul class="pagination">
+                                    {% if page_obj.has_previous %}
+                                      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                                    {% else %}
+                                      <li class="disabled"><span>&laquo;</span></li>
+                                    {% endif %}
+                                    {% for i in paginator.page_range %}
+                                      {% if page_obj.number == i %}
+                                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                                      {% else %}
+                                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                                      {% endif %}
+                                    {% endfor %}
+                                    {% if page_obj.has_next %}
+                                      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                                    {% else %}
+                                      <li class="disabled"><span>&raquo;</span></li>
+                                    {% endif %}
+                                  </ul>
+                                {% endif %}
                             </div>
                             <!--Pagination End-->
                         </div>
