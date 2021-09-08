@@ -552,6 +552,7 @@ class ShopView(ListView):
 	ordering = '-id'
 	def get_queryset(self):
 		queryset = dolloarItem.objects.all()
+
 		return queryset.order_by('id')
 
 	def get_context_data(self, **kwargs):
@@ -574,7 +575,8 @@ class ShopView(ListView):
 				tree['nodes'] = node	
 			Tree.append(tree)	
 		context['tree'] = Tree
-						
+		context['paginate'] = 21
+		context['total'] = len(dolloarItem.objects.all())
 		return context	
 
 
