@@ -24,7 +24,7 @@ CREATE TABLE `dollarama` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `display_name` varchar(255) NOT NULL,
   `product_id` varchar(255) NOT NULL,
-  `category_id` varchar(255) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
   `product_images` varchar(255) DEFAULT NULL,
   `product_full_name` varchar(255) DEFAULT NULL,
   `product_case_price` float DEFAULT NULL,

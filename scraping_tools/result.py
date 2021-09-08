@@ -73,8 +73,13 @@ try:
                 except NoSuchElementException:
                     print('No element')
                 try:
-                    category_id = product_info["CategoryId"]
+                    category = driver.find_element_by_class_name('breadcrumb').find_elements_by_tag_name('li')[3].find_element_by_tag_name('a').text
+                    select_category_query = """SELECT id FROM core_dolloarcategory WHERE name = %s"""
+                    cursor.execute(select_category_query,(category,))
+                    catetory_result = cursor.fetchone()
+                    category_id = catetory_result[0]
                 except NoSuchElementException:
+                    category_id = 0
                     print('No element')
                 product_images = []
                 try:
