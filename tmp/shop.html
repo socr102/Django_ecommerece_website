@@ -11,14 +11,12 @@
                 <!--Product Category Widget Start-->
                 <div class="shop-sidebar">
                     <h4>Product Categories</h4>
-                    <div  id = "tree" class="categori-checkbox">
-
-                            <ul>
-                                {% for category in Categories %}
-                                <li><p onclick="subcategory('{{shop_id}}','{{category.id}}')"><span><i class="fa fa-chevron-right"></i></span>{{category.name}}</p></li>
-                                {% endfor %}
-                            </ul>
-                        
+                    <div  id = "tree" class="categori-checkbox" >
+                        <ul>
+                            {% for category in Categories %}
+                            <li><p onclick="subcategory('{{shop_id}}','{{category.id}}')"><span><i class="fa fa-chevron-right"></i></span>{{category.name}}</p></li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
                 <!--Product Category Widget End-->
@@ -194,7 +192,7 @@
                                             <!--Single Product Start-->
                                             <div class="single-product mb-25">
                                                 <div class="product-img img-full">
-                                                    <a href="/products/{{shop_id}}/{{product.id}}">
+                                                    <a href="/products/Sofa-Sets/">
                                                         <img src=" {{product.product_images}}" alt="{{product.display_name}}" style="width:70%;height:70%">
                                                     </a>
                                                     <span class="onsale">Sale!</span>
@@ -257,7 +255,6 @@
                                                             {{ skill|escape }}<br>
                                                         {% endfor %}
                                                         {% endwith %}
-                                                        
                                                     </div>
                                                     <div class="product-price">
                                                         <div class="price-box">
@@ -384,5 +381,7 @@
 {% endblock %}
 
 {% block extra_scripts %}
-
+    <!-- <script>
+        $('#tree').treeview({data: "{{Tree}}"});
+    </script> -->
 {% endblock %}

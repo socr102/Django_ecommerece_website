@@ -13,7 +13,7 @@ urlpatterns = [
      #path('item_list/<category_name>/',HomeView.as_view(), name='item_list_by_category'),
      path('checkout/',CheckoutView.as_view(), name='checkout'),
      path('payment/<payment_option>/',PaymentView.as_view(), name="payment"),
-     path('products/<shop_id>/<product_id>', products, name='products'),
+     path('products/<shop_id>/<slug>', DolloarItemViews.as_view(), name='products'),
      #path('products/<slug>', ItemDetailView.as_view(), name='products'),
      path('order_summary/',OrderSummary.as_view(), name='order_summary'),
      path('customer_profile/',CustomerProfileView.as_view(), name='customer_profile'),
@@ -28,4 +28,5 @@ urlpatterns = [
      path('complete/', complete, name='complete'),
      path('complete_payment/<tran_id>/<payment_type>/',complete_payment, name='complete_payment'),
      path('contactus/',ContactUsView.as_view(), name='contactus'),
+
 ]

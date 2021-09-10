@@ -585,6 +585,11 @@ class ShopView(ListView):
 		#context['products'] =  dolloarItem.objects.filter(parentid=category_id)
 		context['products'] =  dolloarItem.objects.all()
 		images = []
+
+		#for product in context['products']:
+		#	images.append(product.product_images.split(',')[0][2:][:-1])
+
+		#context['images'] = images
 		context['shop_id'] = 1
 		Tree = []
 		parents = dolloarCategory.objects.filter(parentid = 0)
@@ -626,7 +631,6 @@ def back_tree(request):
 	parent_id = dolloarCategory.objects.get(id = category_id).parentid
 	categories = dolloarCategory.objects.filter(parentid=parent_id)
 	return HttpResponse(serializers.serialize('json', categories), content_type="text/json-comment-filtered")
-
 class ContactUsView(LoginRequiredMixin, View):
 	def get(self, slug, *args, **kwargs):
 		return render(self.request, 'contactus.html')    
