@@ -59,7 +59,7 @@ try:
                 try:
                     display_name = driver.find_elements_by_xpath("//div[@class='search-results']/div[2]/div")[products_index].find_element_by_tag_name('div').find_element_by_class_name('product-tile-text').find_element_by_class_name('product-tile-title-ellipsis').find_element_by_tag_name('a').text
                 except NoSuchElementException:
-                    print('No element')
+                    print('display_name->No element')
                 driver.find_elements_by_xpath("//div[@class='search-results']/div[2]/div")[products_index].find_element_by_tag_name('div').find_element_by_tag_name('a').click()
                 try:# wait for new window
                     WebDriverWait(driver, 60).until(EC.visibility_of_element_located((By.CLASS_NAME,"container")))
@@ -69,11 +69,12 @@ try:
                 product_info = json.loads(product_detail)
                 try:
                     product_id = product_info['productId']
-                    print(product_id)
+                    print("product_id->",product_id)
                 except NoSuchElementException:
-                    print('No element')
+                    print('product_id->No element')
                 try:
-                    category = driver.find_element_by_class_name('breadcrumb').find_elements_by_tag_name('li')[3].find_element_by_tag_name('a').text
+                    count = len(driver.find_element_by_class_name('breadcrumb').find_elements_by_tag_name('li'))
+                    category = driver.find_element_by_class_name('breadcrumb').find_elements_by_tag_name('li')[count-2].find_element_by_tag_name('a').text
                     select_category_query = """SELECT id FROM core_dolloarcategory WHERE name = %s"""
                     cursor.execute(select_category_query,(category,))
                     catetory_result = cursor.fetchone()
@@ -127,14 +128,14 @@ try:
                 
                 if product_record == None:
                     data_array = []
-                    data_array.append((display_name,product_id,category_id,str(product_images), product_full_name, str(product_case_price), str(product_unit_price), str(product_speciation), str(related_product_ID), str(product_specificaions)))
-                    query = """INSERT INTO core_dolloaritem(display_name, product_id, category_id, product_images, product_full_name, product_case_price, product_unit_price, product_speciation, related_product_ID, product_specificaions) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+                    data_array.append((display_name,product_id,category_id,str(product_images), product_full_name, str(product_case_price), str(product_unit_price), str(product_speciation), str(related_product_ID), str(product_specificaions),display_name))
+                    query = """INSERT INTO core_dolloaritem(display_name, product_id, category_id, product_images, product_full_name, product_case_price, product_unit_price, product_speciation, related_product_ID, product_specificaions,slug) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
                     cursor.executemany(query, data_array)
                     data_array = []
                 else:
                     update_data_array = ()
-                    update_data_array = (display_name,category_id,str(product_images), product_full_name, str(product_case_price), str(product_unit_price), str(product_speciation), str(related_product_ID), str(product_specificaions), product_id)
-                    query = """UPDATE core_dolloaritem SET display_name = %s, category_id = %s, product_images = %s, product_full_name = %s, product_case_price = %s, product_unit_price = %s, product_speciation = %s, related_product_ID = %s, product_specificaions = %s WHERE product_id = %s """
+                    update_data_array = (display_name,category_id,str(product_images), product_full_name, str(product_case_price), str(product_unit_price), str(product_speciation), str(related_product_ID), str(product_specificaions), display_name,product_id)
+                    query = """UPDATE core_dolloaritem SET display_name = %s, category_id = %s, product_images = %s, product_full_name = %s, product_case_price = %s, product_unit_price = %s, product_speciation = %s, related_product_ID = %s, product_specificaions = %s ,slug = %s WHERE product_id = %s """
                     cursor.execute(query, update_data_array)
                     update_data_array = ()
                 conn.commit()

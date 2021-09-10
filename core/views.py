@@ -10,10 +10,13 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DeleteView, View
+from django.views.generic import ListView, DeleteView, View, DetailView
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404, redirect, reverse, HttpResponseRedirect
 from django.http import JsonResponse
+from django.http import HttpResponse
+from django.forms.models import model_to_dict
+from django.core import serializers
 
 import requests
 from decimal import Decimal
@@ -71,6 +74,23 @@ class ItemDetailView(DeleteView):
 		context['comments'] = comments
 		return context
 
+class DolloarItemViews(View):
+	model = Item
+	template_name = "product-page.html"
+
+	def get_context_data(self, **kwargs):
+		slug = self.kwargs.get(self.slug_url_kwarg)
+		#comments = Comment.objects.filter(item__slug=slug)
+		context = super().get_context_data(**kwargs)
+		#context['form'] = CommentForm()
+		#context['comments'] = comments
+		return context
+
+def products(request,product_id):
+	context ={}
+	context['prodcut']= dolloarItem.objects.filter(product_id = product_id)
+	print("ddd")
+	return render(request, "product-page.html")
 
 @login_required
 def add_comment_to_item(request, slug):
@@ -98,16 +118,17 @@ class OrderSummary(LoginRequiredMixin, View):
 			return redirect('/')
 
 
-@login_required
-def add_likes_to_product(request, slug):
-	product = get_object_or_404(Item, slug=slug)
-	try:
-		liked_by_user = product.likes.get(pk=request.user.pk)
-		product.likes.remove(liked_by_user)
-		return redirect("core:products", slug=slug)
-	except ObjectDoesNotExist:
-		product.likes.add(request.user)
-		return redirect("core:products", slug=slug)
+#@login_required
+#def add_likes_to_product(request, slug):
+	#product = get_object_or_404(Item, slug=slug)
+	#try:
+	#	liked_by_user = product.likes.get(pk=request.user.pk)
+	#	product.likes.remove(liked_by_user)
+	#	return redirect("core:products", slug=slug)
+	#except ObjectDoesNotExist:
+	#	product.likes.add(request.user)
+	#	return redirect("core:products", slug=slug)
+#	return
 
 
 @login_required
@@ -552,12 +573,22 @@ class ShopView(ListView):
 	ordering = '-id'
 	def get_queryset(self):
 		queryset = dolloarItem.objects.all()
-
 		return queryset.order_by('id')
 
 	def get_context_data(self, **kwargs):
 		context = super().get_context_data(**kwargs)
-		context['Categories'] = dolloarCategory.objects.all()
+
+		category_id =  self.kwargs['category_name']
+		context['Categories'] = dolloarCategory.objects.filter(parentid=category_id)
+		#context['products'] =  dolloarItem.objects.filter(parentid=category_id)
+		context['products'] =  dolloarItem.objects.all()
+		images = []
+
+		#for product in context['products']:
+		#	images.append(product.product_images.split(',')[0][2:][:-1])
+
+		#context['images'] = images
+		context['shop_id'] = 1
 		Tree = []
 		parents = dolloarCategory.objects.filter(parentid = 0)
 		for parent in parents:
@@ -574,12 +605,27 @@ class ShopView(ListView):
 					node.append(leaf)
 				tree['nodes'] = node	
 			Tree.append(tree)	
-		context['tree'] = Tree
+		#context['tree'] = Tree
 		context['paginate'] = 21
 		context['total'] = len(dolloarItem.objects.all())
 		return context	
 
+def subcategory(request):
+	shop_id = request.GET.get('shop_id')
+	category_id = request.GET.get('category_id')
+	subcategoies =  dolloarCategory.objects.filter(parentid=category_id)
+	products = []
+	if subcategoies:
+		products = dolloarItem.objects.all()
+	else:
+		products = 	dolloarItem.objects.filter(category_id=category_id)
 
+
+	data = {
+			'Categories': serializers.serialize('json', subcategoies),
+			'products': serializers.serialize('json', products)
+	}
+	return JsonResponse(data, content_type='application/json')
 
 class ContactUsView(LoginRequiredMixin, View):
 	def get(self, slug, *args, **kwargs):

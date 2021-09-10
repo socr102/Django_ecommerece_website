@@ -48,6 +48,7 @@ class dolloarItem(models.Model):
     product_speciation = models.CharField(max_length = 255, default = "")
     related_product_ID = models.CharField(max_length = 255, default = "")
     product_specificaions = models.CharField(max_length = 255, default = "")
+    slug = models.SlugField(blank=True,unique=True)
 
     def __str__(self):
         return self.display_name

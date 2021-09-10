@@ -12,14 +12,14 @@
                     <h4>Product Categories</h4>
                     <div  id = "tree" class="categori-checkbox">
 
-                        <!-- <form action="#">
+                        <form action="#">
                             {% csrf_token %}
                             <ul>
                                 {% for category in Categories %}
-                                <li><input name="product-categori" type="checkbox"><a href="/shop/0/{{category.name}}">{{category.name}}</a><span class="count">(14)</span></li>
+                                <li><p onclick="subcategory({{shop_id}},{{category.id}})">{{category.name}}</p></li>
                                 {% endfor %}
                             </ul>
-                        </form> -->
+                        </form>
                     </div>
                 </div>
                 <!--Product Category Widget End-->
@@ -236,7 +236,7 @@
                                                 <div class="single-product">
                                                     <div class="product-img img-full">
                                                         <a href="/products/Sofa-Sets/">
-                                                            <img src="{{product.product_images}}" alt="">
+                                                            <img src="{{product.product_images}}" alt=""style="width:70%;height:70%">
                                                         </a>
                                                         <span class="onsale">Sale!</span>
                                                     </div>
@@ -316,8 +316,19 @@
 <!--Shop Area End-->
 
 <script>
-
-    $('#tree').treeview({data: "{{tree}}"});
+    function subcategory(shop_id,category_id){
+        $.ajax({
+            url: '/subcategory/',
+            type:"GET",
+            data: {
+              'shop_id': shop_id,
+              'category_id':category_id
+            },
+            success: function (data) {
+              console.log(data)
+            }
+        });
+    }
 </script>
 {% endblock %}
 
