@@ -74,24 +74,32 @@ class ItemDetailView(DeleteView):
 		context['comments'] = comments
 		return context
 
-class DolloarItemViews(View):
+# class DolloarItemViews(View):
+# 	model = dolloarItem
+# 	template_name = "product-page.html"
+
+# 	def get_context_data(self, **kwargs):
+# 		slug = self.kwargs.get(self.slug_url_kwarg)
+# 		print(slug)
+# 		#comments = Comment.objects.filter(item__slug=slug)
+# 		context = super().get_context_data(**kwargs)
+# 		#context['form'] = CommentForm()
+# 		#context['comments'] = comments
+# 		return context
+
+class DolloarItemDetailViews(ListView):
 	model = dolloarItem
-	template_name = "product-page.html"
+	template_name = "product_page.html"
 
 	def get_context_data(self, **kwargs):
-		slug = self.kwargs.get(self.slug_url_kwarg)
-		print(slug)
-		#comments = Comment.objects.filter(item__slug=slug)
+		product_id = self.kwargs['product_id']
+		product = dolloarItem.objects.filter(pk=product_id)
 		context = super().get_context_data(**kwargs)
-		#context['form'] = CommentForm()
-		#context['comments'] = comments
-		return context
-
-def products(request,shop_id,product_id):
-	products = dolloarItem.objects.filter(id=product_id)
+		context['product'] = product
+		print(context)
 	#print({'product':serializers.serialize('json', context)})
 	#return render(request, "product-page.html",{'product':serializers.serialize('json', context)})
-	return render(request,"product-page.html",{"product":products})
+		return context
 
 
 @login_required
@@ -571,7 +579,7 @@ class CustomerProfileView(LoginRequiredMixin, View):
 class ShopView(ListView):
 	model = dolloarItem
 	template_name = "shop.html"
-	paginate_by = 21
+	paginate_by = 12
 	ordering = '-id'
 	def get_queryset(self):
 		queryset = dolloarItem.objects.all()
