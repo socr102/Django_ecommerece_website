@@ -74,14 +74,16 @@
                           </div>
                       </div>
                       <div class="col-md-12">
-                          <div class="country-select clearfix">
+                          <div class="country-select clearfix wrapper">
                               {% get_countries as countries %}
                               <label>Country <span class="required">*</span></label>
-                              <select class="wide">
-                                    {% for country in countries %}
-                                    <option value="{{ country.code }}">{{ country.name }}</option>
-                                {% endfor %}
-                              </select>
+                              <!-- <div class="country"> -->
+                                <select class="wide"size="5" >
+                                      {% for country in countries %}
+                                      <option value="{{ country.code }}">{{ country.name }}</option>
+                                  {% endfor %}
+                                </select>
+                              <!-- </div>   -->
                           </div>
                       </div>
 
@@ -164,23 +166,22 @@
                           </tr>
                       </thead>
                       <tbody>
-                          <tr class="cart_item">
-                            <td class="cart-product-name"> Vestibulum suscipit<strong class="product-quantity"> × 1</strong></td>
-                            <td class="cart-product-total"><span class="amount">£165.00</span></td>  
-                          </tr>
-                          <tr class="cart_item">
-                            <td class="cart-product-name"> Vestibulum suscipit<strong class="product-quantity"> × 1</strong></td>
-                            <td class="cart-product-total"><span class="amount">£165.00</span></td>  
-                          </tr>
+                        {% for order_item in orders.items.all %}
+                        <tr class="cart_item">
+                            <td class="cart-product-name">{{order_item.item.display_name}}<strong class="product-quantity"> {{order_item.item.product_unit_price}}$ × {{order_item.quantity}}</strong></td>
+                            <td class="cart-product-total"><span class="amount">{{order_item.get_total_price}}$</span></td>  
+                        </tr>
+                        {%  endfor %}
+                          
                       </tbody>
                       <tfoot>
                           <tr class="cart-subtotal">
                               <th>Cart Subtotal</th>
-                              <td><span class="amount">£215.00</span></td>
+                              <td><span class="amount">{{orders.get_total}}$</span></td>
                           </tr>
                           <tr class="order-total">
                               <th>Order Total</th>
-                              <td><strong><span class="amount">£215.00</span></strong></td>
+                              <td><strong><span class="amount">{{orders.get_total}}$</span></strong></td>
                           </tr>
                       </tfoot>
                   </table>
@@ -232,7 +233,9 @@
                             </div>
                           </div>
                           <div class="order-button-payment">
-                              <input value="Place order" type="submit">
+                              <div class="order-button-payment">
+                                  <input value="Place order" type="submit">
+                              </div>
                           </div>
                   </div>
               </div>

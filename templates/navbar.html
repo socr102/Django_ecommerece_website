@@ -43,7 +43,7 @@
                                       </a>
                                      <!--Cart Dropdown Start-->
                                     <div class="cart-dropdown">
-                                          <ul>
+                                          <ul class="checkout">
                                           {% for order_item in request.user|order_items %}
                                           <li class="single-cart-item">
                                               {% with order_item.item.product_images|split:"," as images %}

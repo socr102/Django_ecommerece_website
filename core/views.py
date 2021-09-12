@@ -246,7 +246,6 @@ class CheckoutView(LoginRequiredMixin, View):
 		form = CheckoutForm()
 		try:
 			order_items = Cart.objects.get(user=self.request.user, ordered=False)
-
 			if order_items.items.count() == 0:
 				messages.info(self.request, "No item in your cart")
 				return redirect("core:item_list")
@@ -397,7 +396,6 @@ def generate_reference_code():
 	return "".join(random.choices(string.ascii_lowercase
 								  + string.ascii_uppercase
 								  + string.digits, k=20))
-
 
 class PaymentView(LoginRequiredMixin, View):
 	def get(self, *args, **kwargs):
