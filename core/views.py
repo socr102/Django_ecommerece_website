@@ -96,9 +96,8 @@ class DolloarItemDetailViews(ListView):
 		product = dolloarItem.objects.filter(pk=product_id)
 		context = super().get_context_data(**kwargs)
 		context['product'] = product
-		print(context)
-	#print({'product':serializers.serialize('json', context)})
-	#return render(request, "product-page.html",{'product':serializers.serialize('json', context)})
+		context['shop_id'] = self.kwargs['shop_id']
+		
 		return context
 
 
@@ -142,16 +141,18 @@ class OrderSummary(LoginRequiredMixin, View):
 
 
 @login_required
-def add_to_cart(request, slug):
-	item = get_object_or_404(Item, slug=slug)
+def add_to_cart(request, shop_id,slug):
+	#item = get_object_or_404(Item, slug=slug)
 	"""
 	Get the instance of the ordered item from the OrderItem model if it exists otherwise create the instance 
 	get_or_create() returns a tuple of (object, created), where object is the retrieved or created object and created 
 	is a boolean specifying whether a new object was created.
 	"""
+	item = dolloarItem.objects.get(slug=slug)
 	ordered_item, is_created = OrderItem.objects.get_or_create(
 		user=request.user,
 		item=item,
+		shop=shop_id,
 		ordered=False
 	)
 	user_cart = Cart.objects.filter(user=request.user, ordered=False)
@@ -183,7 +184,7 @@ def add_to_cart(request, slug):
 
 @login_required
 def remove_from_the_cart(request, slug):
-	item = get_object_or_404(Item, slug=slug)
+	item = get_object_or_404(dolloarItem, slug=slug)
 	order_qs = Cart.objects.filter(user=request.user, ordered=False)
 	if order_qs.exists():
 		order = order_qs[0]
@@ -245,6 +246,7 @@ class CheckoutView(LoginRequiredMixin, View):
 		form = CheckoutForm()
 		try:
 			order_items = Cart.objects.get(user=self.request.user, ordered=False)
+
 			if order_items.items.count() == 0:
 				messages.info(self.request, "No item in your cart")
 				return redirect("core:item_list")
@@ -634,6 +636,18 @@ def back_tree(request):
 	parent_id = dolloarCategory.objects.get(id = category_id).parentid
 	categories = dolloarCategory.objects.filter(parentid=parent_id)
 	return HttpResponse(serializers.serialize('json', categories), content_type="text/json-comment-filtered")
+
+@csrf_exempt
+def quantity(request):
+	item_id=request.POST.get('item_id')
+	quantity=request.POST.get('counter')
+	user_id=request.POST.get('user_id')
+	order_item = OrderItem.objects.get(id=item_id)
+	order_item.quantity=quantity
+	order_item.save()
+	total_price = order_item.get_total_price() 	
+	cart_total_price = Cart.objects.get(user_id=user_id).get_total()
+	return JsonResponse({'total':total_price,'cart_total_price':cart_total_price})
 
 class ContactUsView(LoginRequiredMixin, View):
 	def get(self, slug, *args, **kwargs):

@@ -13,5 +13,5 @@ register.filter('split', split)
 
 @register.filter(name='escape')
 def escape(value):
-	return value.translate({ord(i): None for i in ["[","]","'"]})
+	return value.translate({ord(i): None for i in ["[","]","'","{","}"]})
 register.filter('escape', escape)

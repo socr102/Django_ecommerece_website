@@ -1,0 +1,38 @@
+<div class="col-md-4">
+                                        <!--Single Product Start-->
+                                        <div class="single-product mb-25">
+                                            <div class="product-img img-full">
+                                                <a href="/products/{{shop_id}}/{{product.id}}">
+                                                    {% with dolloar.product_images|split:"," as images %}
+                                                    {% for image in images %}
+                                                    {% if forloop.counter == 1 %}
+                                                        <img src="{{ image|escape }}" alt="{{product.display_name}}" >   
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    {% endwith %}
+                                                       
+                                                </a>
+                                                <span class="onsale">Sale!</span>
+                                                <div class="product-action">
+                                                    <ul>
+                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-content">
+                                                <h2><a href="/products/Sofa-Sets/">{{dolloar.display_name}}</a></h2>
+                                                <div class="product-price">
+                                                    <div class="price-box">
+                                                        <span class="regular-price">{{dolloar.product_case_price}}$/unit</span>
+                                                    </div>
+                                                    <div class="add-to-cart">
+                                                        <a href="/add_to_cart/{{product.slug}}/"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!--Single Product End-->
+                                    </div>

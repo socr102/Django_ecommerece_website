@@ -1,20 +1,20 @@
 
 {% extends 'base.html' %}
+{% load product_description %}
 {% load crispy_forms_tags %}
 {% load static %}
-{% block product %}
+{% block content %}
  <!--Breadcrumb One Start-->
-  <div class="breadcrumb-one mb-120">
+  <div class="breadcrumb-one-product mb-120">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="breadcrumb-img">
-                    <img src="{% static 'img/page-banner/product-banner.jpg' %}" alt="">
                 </div>
-                <div class="breadcrumb-content">
+                <div class="breadcrumb-content breadcrumb-content-product">
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li class="active">Single Product Affiliate</li>
+                        <li class="active">Product detail</li>
                     </ul>
                 </div>
             </div>
@@ -22,97 +22,63 @@
     </div>
   </div>
 <!--Breadcrumb One End-->
+{% for item in product %}
 <!--Single Product Area Start-->
 <div class="single-product-area mb-115">
     <div class="container">
         <div class="row">
+            
             <div class="col-md-12 col-lg-5">
                 <div class="product-details-img-tab">
                     <!--Product Tab Content Start-->
                     <div class="tab-content single-product-img">
-                          <div class="tab-pane fade show active" id="product1">
+                          {% with item.product_images|split:"," as images %}
+                          {% for image in images %} 
+                          {% if forloop.counter == 1 %} 
+                          <div class="tab-pane fade show active" id="product{{forloop.counter}}">
                               <div class="product-large-thumb img-full">
                                  <div class="easyzoom easyzoom--overlay">
-                                    <a href="{{ object.item_image.url }}">
-                                        <img src="{{ object.item_image.url }}" alt="">
+                                    <a href="{{ image|escape }}">
+                                        <img src="{{ image|escape }}" alt="">
                                     </a>
-                                    <a href="{{ object.item_image.url }}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
+                                    <a href="{{ image|escape }}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
                                  </div>
                               </div>
                           </div>
-                          <div class="tab-pane fade" id="product2">
+                          {% else %}
+                           <div class="tab-pane fade" id="product{{forloop.counter}}">
                               <div class="product-large-thumb img-full">
                                  <div class="easyzoom easyzoom--overlay">
-                                    <a href="{% static 'img/single-product/large/single-product2.jpg' %}">
-                                      <img src="{% static 'img/single-product/large/single-product2.jpg' %}" alt="">
+                                    <a href="{{ image|escape }}">
+                                      <img src="{{ image|escape }}" alt="">
                                     </a>
-                                    <a href="{% static 'img/single-product/large/single-product2.jpg' %}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
+                                    <a href="{{ image|escape }}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
                                  </div>
                               </div>
-                          </div>
-                          <div class="tab-pane fade" id="product3">
-                              <div class="product-large-thumb img-full">
-                                 <div class="easyzoom easyzoom--overlay">
-                                    <a href="{% static 'img/single-product/large/single-product3.jpg' %}">
-                                      <img src="{% static 'img/single-product/large/single-product3.jpg' %}" alt="">
-                                    </a>
-                                    <a href="{% static 'img/single-product/large/single-product3.jpg' %}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
-                                 </div>
-                              </div>
-                          </div>
-                          <div class="tab-pane fade" id="product4">
-                              <div class="product-large-thumb img-full">
-                                 <div class="easyzoom easyzoom--overlay">
-                                    <a href="{% static 'img/single-product/large/single-product4.jpg' %}">
-                                      <img src="{% static 'img/single-product/large/single-product4.jpg' %}" alt="">
-                                    </a>
-                                    <a href="{% static 'img/single-product/large/single-product4.jpg' %}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
-                                 </div>
-                              </div>
-                          </div>
-                          <div class="tab-pane fade" id="product5">
-                              <div class="product-large-thumb img-full">
-                                <div class="easyzoom easyzoom--overlay">
-                                    <a href="{% static 'img/single-product/large/single-product5.jpg' %}">
-                                      <img src="{% static 'img/single-product/large/single-product5.jpg' %}" alt="">
-                                    </a>
-                                    <a href="{% static 'img/single-product/large/single-product5.jpg' %}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
-                                 </div>
-                              </div>
-                          </div>
-                          <div class="tab-pane fade" id="product6">
-                              <div class="product-large-thumb img-full">
-                                <div class="easyzoom easyzoom--overlay">
-                                    <a href="{% static 'img/single-product/large/single-product6.jpg' %}">
-                                      <img src="{% static 'img/single-product/large/single-product6.jpg' %}" alt="">
-                                    </a>
-                                    <a href="{% static 'img/single-product/large/single-product6.jpg' %}" class="popup-img venobox" data-gall="myGallery"><i class="fa fa-search"></i></a>
-                                 </div>
-                              </div>
-                          </div>
+                           </div>  
+                           {% endif %}   
+                           {% endfor %}
+                           {% endwith %}
+                          
                         </div>
                     <!--Product Tab Content End-->
                     <!--Product Tab Menu Start-->
                     <div class="product-menu">
                         <div class="nav product-tab-menu">
+                              
+                              {% with item.product_images|split:"," as imgs %}
+                              {% for img in imgs %} 
+                              {% if forloop.conuter == 1 %} 
                               <div class="product-details-img">
-                                <a class="active" data-bs-toggle="tab" href="#product1"><img src="{{ object.item_image.url }}" alt=""></a>
+                                <a class="active" data-bs-toggle="tab" href="#product{{forloop.counter}}"><img src="{{ img|escape}}" alt="" ></a>
                               </div>
-                              <div class="product-details-img">
-                                <a data-bs-toggle="tab" href="#product2"><img src="{% static 'img/single-product/large/single-product2.jpg' %}" alt=""></a>
-                              </div>
-                              <div class="product-details-img">
-                                <a data-bs-toggle="tab" href="#product3"><img src="{% static 'img/single-product/large/single-product3.jpg' %}" alt=""></a>
-                              </div>
-                              <div class="product-details-img">
-                                <a data-bs-toggle="tab" href="#product4"><img src="{% static 'img/single-product/large/single-product4.jpg' %}" alt=""></a>
-                              </div>
-                              <div class="product-details-img">
-                                <a data-bs-toggle="tab" href="#product5"><img src="{% static 'img/single-product/large/single-product5.jpg' %}" alt=""></a>
-                              </div>
-                              <div class="product-details-img">
-                                <a data-bs-toggle="tab" href="#product6"><img src="{% static 'img/single-product/large/single-product6.jpg' %}" alt=""></a>
-                              </div>
+                               {% else %}
+                               <div class="product-details-img">
+                                <a data-bs-toggle="tab" href="#product{{forloop.counter}}"><img src="{{ img|escape }}" alt=""></a>
+                              </div>   
+                               {% endif %}  
+                               {% endfor %}
+                               {% endwith %}
                             </div>
                     </div>
                     <!--Product Tab Menu End-->
@@ -127,7 +93,7 @@
                             <a href="#"><i class="fa fa-angle-right"></i></a>
                         </div>
                         <!--Product Nav End-->
-                    <h2>{{object.item_name}}</h2>
+                    <h2>{{item.product_full_name}}</h2>
                     <div class="single-product-reviews">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -137,19 +103,19 @@
                             <a class="review-link" href="#">(1 customer review)</a>
                         </div>
                         <div class="single-product-price">
-                          {% if object.discount_price %}
-                            <span class="price new-price">${{object.price}}</span>
-                            <span class="regular-price">${{object.discount_price}}</span>
-                          {% else %}
-                            <span class="price new-price">${{object.price}}</span>
-                          {% endif %}
+                          <span class="regular-price">Case : ${{item.product_case_price}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                          <span class="regular-price">Unit : ${{item.product_unit_price}}</span>
                         </div>
                         <div class="product-description">
-                            <p>{{object.description}}</p>
+                            {% with item.product_speciation|split:"', '" as skills %}
+                            {% for skill in skills %}
+                                {{ skill|escape }}<br>
+                            {% endfor %}
+                            {% endwith %}
                         </div>
                         <p class="stock in-stock">150 in stock</p>
                         <div class="single-product-quantity">
-                            <form class="add-quantity" action="{{object.get_add_to_cart}}">
+                            <form class="add-quantity" action="/add_to_cart/{{shop_id}}/{{item.slug}}/">
                                 <div class="add-to-link">
                                     <button class="product-btn" data-text="add to cart">add to cart</button>
                                 </div>
@@ -160,10 +126,10 @@
                             <a href="#" class="add-compare">Compare</a>
                         </div>
                         <div class="product-meta">
-                            <span class="posted-in">
+                            <!-- <span class="posted-in">
                                     Categories: 
                                 <a href="#">{{object.item_category}}</a>,
-                            </span>
+                            </span> -->
                         </div>
                         <div class="single-product-sharing">
                             <h3>Share this product</h3>
@@ -178,6 +144,7 @@
                 </div>
                 <!--Product Details Content End-->
             </div>
+            
         </div>
     </div>
 </div>
@@ -195,9 +162,9 @@
                           </li>
                           <li>
                             {% if comments.count != 0 %}
-                              <a data-bs-toggle="tab" href="#reviews">Reviews ({{comments.count}})</a>
+                              <!-- <a data-bs-toggle="tab" href="#reviews">Reviews ({{comments.count}})</a> -->
                             {% else %}
-                            <a data-bs-toggle="tab" href="#reviews">Reviews</a>
+                            <!-- <a data-bs-toggle="tab" href="#reviews">Reviews</a> -->
                             {% endif %}
                           </li>
                         </ul>
@@ -206,8 +173,23 @@
                     <div class="tab-content product-review-content-tab" id="myTabContent-4">
                           <div class="tab-pane fade active show" id="description">
                               <div class="single-product-description">
-                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam fringilla augue nec est tristique auctor. Donec non est at libero vulputate rutrum. Morbi ornare lectus quis justo gravida semper. Nulla tellus mi, vulputate adipiscing cursus eu, suscipit id nulla.</p>
-                                 <p>Pellentesque aliquet, sem eget laoreet ultrices, ipsum metus feugiat sem, quis fermentum turpis eros eget velit. Donec ac tempus ante. Fusce ultricies massa massa. Fusce aliquam, purus eget sagittis vulputate, sapien libero hendrerit est, sed commodo augue nisi non neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempor, lorem et placerat vestibulum, metus nisi posuere nisl, in accumsan elit odio quis mi. Cras neque metus, consequat et blandit et, luctus a nunc. Etiam gravida vehicula tellus, in imperdiet ligula euismod eget.</p>
+                                  <table class="table table-bordered table-striped" style="width: 80%; margin-left: auto; margin-right: auto;">
+                                    {% with item.product_specificaions|split:"," as skills %}
+                                    {% for skill in skills %}
+                                        <tr>
+                                            {% with skill|split:":" as tr_data %}
+                                                {% for td_data in tr_data %}
+                                                    {% if td_data|escape == ' ' %}
+                                                        <!--  continue  -->
+                                                    {% else %}
+                                                        <td>{{ td_data|escape}}</td>
+                                                    {% endif %}
+                                                {% endfor %}                
+                                            {% endwith %}        
+                                        </tr>
+                                    {% endfor %}
+                                    {% endwith %}
+                                </table>
                               </div>
                           </div>
                           <div class="tab-pane fade" id="reviews">
@@ -305,380 +287,61 @@
         </div>
         <div class="row">
             <div class="product-slider-active p-0">
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
+
                     <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product1.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Eleifend quam</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$115.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product3.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Nulla sed stg</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$40.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product5.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Odio tortor consequat</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$90.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product7.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Vulputate justo</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$70.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product9.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Ipsum imperdie</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$100.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product11.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Pellentesque position</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$90.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
+                    {% with item.related_product_ID|split:"," as related_products %}
+                        {% for related_product in related_products %}
+                            {% for dolloar in object_list %}
+                                {% if dolloar.product_id in related_product|escape %}
+                                    <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
+                                        <!--Single Product Start-->
+                                        <div class="single-product mb-25">
+                                            <div class="product-img img-full">
+                                                <a href="/products/{{shop_id}}/{{dolloar.id}}">
+                                                    {% with dolloar.product_images|split:"," as images %}
+                                                    {% for image in images %}
+                                                    {% if forloop.counter == 1 %}
+                                                    <img src="{{ image|escape }}" alt="{{product.display_name}}" style="width: 70%;height: 70%;" >   
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    {% endwith %}
+                                                       
+                                                </a>
+                                                <span class="onsale">Sale!</span>
+                                                <div class="product-action">
+                                                    <ul>
+                                                        <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                                        <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                                        <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
+                                            <div class="product-content">
+                                                <h2><a href="/products/{{shop_id}}/{{dolloar.id}}">{{dolloar.display_name}}</a></h2>
+                                                <div class="product-price">
+                                                    <div class="price-box">
+                                                        <span class="regular-price">{{dolloar.product_case_price}}$/unit</span>
+                                                    </div>
+                                                    <div class="add-to-cart">
+                                                        <a href="/add_to_cart/{{shop_id}}/{{dolloar.slug}}/"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!--Single Product End-->
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    {% endwith %}
+
             </div>
         </div>
     </div>
 </div>
 <!--Also Like Product End-->
-<!--Related Product Start-->
-<div class="Related-product mt-105 mb-100">
-    <div class="container">
-        <div class="row">
-            <!--Section Title Start-->
-                <div class="col-12">
-                    <div class="section-title text-center mb-35">
-                        <h3>Related products</h3>
-                    </div>
-                </div>
-                <!--Section Title End-->
-        </div>
-        <div class="row">
-            <div class="product-slider-active p-0">
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product7.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Vulputate justo</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$70.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product9.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Ipsum imperdie</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$100.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product11.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Pellentesque position</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$90.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product1.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Eleifend quam</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$115.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product3.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Nulla sed stg</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$40.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-                <div class="col-md-3 col-lg-3 col-sm-4 col-xs-12">
-                    <!--Single Product Start-->
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="single-product.html">
-                                <img src="{% static 'img/product/product5.jpg' %}" alt="">
-                            </a>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="product-content">
-                            <h2><a href="single-product.html">Odio tortor consequat</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">$90.00</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="#">Add To Cart</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--Single Product End-->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--Related Product End-->
-
-
+{% endfor %}
 {% endblock %}
 
 

@@ -10,6 +10,7 @@ urlpatterns = [
      path('shop/<shop_id>/<category_name>/',ShopView.as_view(), name='item_list_by_category'),
      path('subcategory/',subcategory,name="subcategory"),
      path('back_tree/',back_tree,name="back_tree"),
+     path('quantity/',quantity,name="quantity"),
      #path('item_list/<category_name>/',HomeView.as_view(), name='item_list_by_category'),
      path('checkout/',CheckoutView.as_view(), name='checkout'),
      path('payment/<payment_option>/',PaymentView.as_view(), name="payment"),

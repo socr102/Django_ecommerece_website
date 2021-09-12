@@ -8772,3 +8772,18 @@ a.ideas-btn:hover {
 	animation-duration: 1s;
 	animation-iteration-count: 1;
 }
+.breadcrumb-one-product{
+	position: relative;
+	width: 100%;
+	padding: 120px 0;
+	background: url('/static/img/banner/product_detail.png')no-repeat center fixed;
+	background-position-y: -9em;
+	/* padding: 55px 0 50px 0; */
+	background-size: cover;
+}
+.breadcrumb-content-product{
+	position: relative;
+	bottom: -8em;
+	left: 0;
+	text-align: left;
+}

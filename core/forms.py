@@ -14,14 +14,21 @@ CHOICE_FIELDS = (
 
 class CheckoutForm(forms.Form):
     # Shipping information
-    shipping_address = forms.CharField(required=False)
-    shipping_address2 = forms.CharField(required=False)
+    shipping_address = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': '1234 Main St'
+    }))
+
+    shipping_address2 = forms.CharField(required=False, widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Apartment or suite'
+    }))
+
     shipping_country = CountryField(blank_label='(select country)').formfield(
-        required=False,
-        widget=CountrySelectWidget(attrs={
-            'class': 'custom-select d-block w-100',
-        }))
-    shipping_zip = forms.CharField(required=False)
+        required=False,widget=CountrySelectWidget(attrs={'class': 'custom-select d-block w-100',}))
+    shipping_zip = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'
+    }))
+    
     same_billing_address = forms.BooleanField(required=False)
     set_default_shipping = forms.BooleanField(required=False)
     use_default_shipping = forms.BooleanField(required=False)

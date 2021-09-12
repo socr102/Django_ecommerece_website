@@ -195,7 +195,14 @@
                                             <div class="single-product mb-25">
                                                 <div class="product-img img-full">
                                                     <a href="/products/{{shop_id}}/{{product.id}}">
-                                                        <img src=" {{product.product_images}}" alt="{{product.display_name}}" style="width:70%;height:70%">
+                                                        {% with product.product_images|split:"," as images %}
+                                                        {% for image in images %}
+                                                            {% if forloop.counter == 1 %}
+                                                             <img src="{{ image|escape }}" alt="{{product.display_name}}" style="width:70%;height:70%">   
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% endwith %}
+                                                       
                                                     </a>
                                                     <span class="onsale">Sale!</span>
                                                     <div class="product-action">
@@ -208,13 +215,13 @@
                                                 </div>
 
                                                 <div class="product-content">
-                                                    <h2><a href="/products/Sofa-Sets/">{{product.display_name}}</a></h2>
+                                                    <h2><a href="/products/{{shop_id}}/{{product.id}}">{{product.display_name}}</a></h2>
                                                     <div class="product-price">
                                                         <div class="price-box">
                                                             <span class="regular-price">{{product.product_case_price}}$/unit</span>
                                                         </div>
                                                         <div class="add-to-cart">
-                                                            <a href="/order_summary"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
+                                                            <a href="/add_to_cart/{{shop_id}}/{{product.slug}}/"><img src="{% static 'img/cart/cart_button.jpg' %}" style="width: 13em;"/></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -234,8 +241,14 @@
                                             <div class="col-md-4">
                                                 <div class="single-product">
                                                     <div class="product-img img-full">
-                                                        <a href="/products/Sofa-Sets/">
-                                                            <img src="{{product.product_images}}" alt=""style="width:70%;height:70%">
+                                                        <a href="/products/{{shop_id}}/{{product.id}}">
+                                                        {% with product.product_images|split:"," as images %}
+                                                        {% for image in images %}
+                                                        {% if forloop.counter == 1 %}
+                                                        <img src="{{ image|escape }}" alt="{{product.display_name}}" style="width:70%;height:70%">   
+                                                        {% endif %}
+                                                        {% endfor %}
+                                                        {% endwith %}
                                                         </a>
                                                         <span class="onsale">Sale!</span>
                                                     </div>
@@ -243,7 +256,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="product-content shop-list">
-                                                    <h2><a href="/products/Sofa-Sets/">{{product.display_name}}</a></h2>
+                                                    <h2><a href="/products/{{shop_id}}/{{product.id}}">{{product.display_name}}</a></h2>
                                                     <div class="product-reviews">
                                                         <i class="fa fa-star"></i>
                                                         <i class="fa fa-star"></i>
@@ -252,7 +265,7 @@
                                                         <i class="fa fa-star"></i>
                                                     </div>
                                                     <div class="product-description">
-                                                        {% with product.product_speciation|split:"," as skills %}
+                                                        {% with product.product_speciation|split:"', '" as skills %}
                                                         {% for skill in skills %}
                                                             {{ skill|escape }}<br>
                                                         {% endfor %}
@@ -267,7 +280,7 @@
                                                     </div>
                                                     <div class="product-list-action">
                                                        <div class="add-btn">
-                                                            <a href="/order_summary"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
+                                                            <a href="/add_to_cart/{{shop_id}}/{{product.slug}}/"><img class="add-btn-list" src="{% static 'img/cart/cart_button.jpg' %}" /></a>
                                                         </div>
                                                         <ul class="tool-list-action" class="tool-list-action">
                                                             <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
@@ -336,108 +349,116 @@
               'category_id':category_id
             },
             success: function (data) {
-              console.log(data)
               if(data.length == 0)
                 return;
               if(data[0]['model'] == 'core.dolloaritem' && shop_id == 1){
                 var products_grid = ''
                 var products_list = ''
                 for(var i = 0; i<data.length; i++){
-                products_grid += `<div class="col-md-4">
-                    <div class="single-product mb-25">
-                        <div class="product-img img-full">
-                            <a href="/products/`+shop_id+`/`+data[i]["pk"]+`">
-                                <img src="`+data[i]["fields"]["product_images"]+`" alt="`+data[i]['fields']['display_name']+`" style="width:70%;height:70%">
-                            </a>
-                            <span class="onsale">Sale!</span>
-                            <div class="product-action">
-                                <ul>
-                                    <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
-                                    <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
-                                    <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="product-content">
-                            <h2><a href="/products/`+shop_id+`/`+data[i]["pk"]+`">`+data[i]["fields"]["display_name"]+`</a></h2>
-                            <div class="product-price">
-                                <div class="price-box">
-                                    <span class="regular-price">`+data[i]["fields"]["product_case_price"]+`$/unit</span>
-                                </div>
-                                <div class="add-to-cart">
-                                    <a href="/order_summary"><img src="/static/img/cart/cart_button.jpg" style="width: 13em;"/></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                var temp = data[i]["fields"]["product_speciation"];
-                temp = temp.substr(1,temp.length-2);
-                console.log(temp)
-                var speciation = temp.split("', '");
-                console.log(speciation)
-                var speciation_list = '' 
-                for(var j=0; j<speciation.length; j++){
-                    if(j == 0){
-                        speciation[j] = speciation[j].substr(1,speciation[j].length)
+                    var temp = data[i]["fields"]["product_images"];
+                    temp = temp.substr(1,temp.length-2);
+                    var images = temp.split("', '");
+                    for(var j=0; j<images.length; j++){
+                        if(j == 0){
+                            images[j] = images[j].substr(1,images[j].length)
+                        }
+                        if(images[j] == "" || images[j] == "'")
+                            continue;
                     }
-                    if(speciation[j] == "" || speciation[j] == "'")
-                        continue;
-                    else 
-                        speciation_list += '<span>'+speciation[j]+'</span><br>'
-                }
-                products_list += `
-                <div class="product-list-item mb-40">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="single-product">
-                                <div class="product-img img-full">
-                                    <a href="/products/`+shop_id+`/`+data[i]["pk"]+`">
-                                        <img src="`+data[i]["fields"]["product_images"]+`" alt=""style="width:70%;height:70%">
-                                    </a>
-                                    <span class="onsale">Sale!</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="product-content shop-list">
-                                <h2><a href="/products/`+shop_id+`/`+data[i]["pk"]+`">`+data[i]["fields"]["display_name"]+`</a></h2>
-                                <div class="product-reviews">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                                <div class="product-description">
-                                    `+speciation_list+`
-                                </div>
-                                <div class="product-price">
-                                    <div class="price-box">
-                                        <span class="regular-price">Case : `+data[i]["fields"]["product_case_price"]+`$</span>
-                                        <span class="regular-price">Unit : `+data[i]["fields"]["product_unit_price"]+`$</span>
-                                    </div>
-                                </div>
-                                <div class="product-list-action">
-                                    <div class="add-btn">
-                                        <a href="/order_summary"><img class="add-btn-list" src="/static/img/cart/cart_button.jpg" /></a>
-                                    </div>
-                                    <ul class="tool-list-action" class="tool-list-action">
+                    console.log(images)
+                    products_grid += `<div class="col-md-4">
+                        <div class="single-product mb-25">
+                            <div class="product-img img-full">
+                                <a href="/products/`+shop_id+`/`+data[i]["pk"]+`">
+                                    <img src="`+images[0]+`" alt="`+data[i]['fields']['display_name']+`" style="width:70%;height:70%">
+                                </a>
+                                <span class="onsale">Sale!</span>
+                                <div class="product-action">
+                                    <ul>
                                         <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
                                         <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
                                         <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
+
+                            <div class="product-content">
+                                <h2><a href="/products/`+shop_id+`/`+data[i]["pk"]+`">`+data[i]["fields"]["display_name"]+`</a></h2>
+                                <div class="product-price">
+                                    <div class="price-box">
+                                        <span class="regular-price">`+data[i]["fields"]["product_case_price"]+`$/unit</span>
+                                    </div>
+                                    <div class="add-to-cart">
+                                        <a href="/order_summary"><img src="/static/img/cart/cart_button.jpg" style="width: 13em;"/></a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>`
-                }
-                $("#products_grid").html('')
-                $("#product_list").html('')
-                $("#product_list").html(products_list)
-                $("#products_grid").html(products_grid)
+                    </div>`;
+                    var temp = data[i]["fields"]["product_speciation"];
+                    temp = temp.substr(1,temp.length-2);
+                    var speciation = temp.split("', '");
+                    var speciation_list = '' 
+                    for(var j=0; j<speciation.length; j++){
+                        if(j == 0){
+                            speciation[j] = speciation[j].substr(1,speciation[j].length)
+                        }
+                        if(speciation[j] == "" || speciation[j] == "'")
+                            continue;
+                        else 
+                            speciation_list += '<span>'+speciation[j]+'</span><br>'
+                    }
+                    products_list += `
+                    <div class="product-list-item mb-40">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="single-product">
+                                    <div class="product-img img-full">
+                                        <a href="/products/`+shop_id+`/`+data[i]["pk"]+`">
+                                            <img src="`+images[0]+`" alt=""style="width:70%;height:70%">
+                                        </a>
+                                        <span class="onsale">Sale!</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="product-content shop-list">
+                                    <h2><a href="/products/`+shop_id+`/`+data[i]["pk"]+`">`+data[i]["fields"]["display_name"]+`</a></h2>
+                                    <div class="product-reviews">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="product-description">
+                                        `+speciation_list+`
+                                    </div>
+                                    <div class="product-price">
+                                        <div class="price-box">
+                                            <span class="regular-price">Case : `+data[i]["fields"]["product_case_price"]+`$</span>
+                                            <span class="regular-price">Unit : `+data[i]["fields"]["product_unit_price"]+`$</span>
+                                        </div>
+                                    </div>
+                                    <div class="product-list-action">
+                                        <div class="add-btn">
+                                            <a href="/order_summary"><img class="add-btn-list" src="/static/img/cart/cart_button.jpg" /></a>
+                                        </div>
+                                        <ul class="tool-list-action" class="tool-list-action">
+                                            <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>
+                                            <li><a href="#" title="Whishlist"><i class="fa fa-heart-o"></i></a></li>
+                                            <li><a href="#" title="Compare"><i class="fa fa-refresh"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`
+                    }
+                    $("#products_grid").html('')
+                    $("#product_list").html('')
+                    $("#product_list").html(products_list)
+                    $("#products_grid").html(products_grid)
               }else{
                 var html = '<ul>'
                 html+= '<button class="form-control" onclick="back_tree('+shop_id+','+category_id+')" style="margin-bottom:15px; font-size:1em;">Back</button>'
@@ -445,7 +466,6 @@
                     html += '<li><p onclick="subcategory('+shop_id+','+data[i]['pk']+')">'+data[i]['fields']['name']+'</p></li>';
                 }
                 html += '</ul>';
-                console.log(html);
                 $("#tree").addClass('tree-fadeOut-animation');
                 sleep(500).then(() => { 
                     $("#tree").html('');
@@ -472,7 +492,6 @@
                  html += '<li><p onclick="subcategory('+shop_id+','+data[i]['pk']+')">'+data[i]['fields']['name']+'</p></li>';
               }
               html += '</ul>';
-              console.log(html);
               $("#tree").addClass('tree-fadeOut-animation');
               sleep(500).then(() => { 
                 $("#tree").html('');

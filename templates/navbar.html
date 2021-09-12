@@ -1,4 +1,6 @@
 {% load cart_template_tags %}
+{% load product_description %}
+
 {% load static %}
 <header>
   <div class="header-container">
@@ -37,41 +39,37 @@
                                           <span class="cart-icon">
                                              <span class="cart-quantity">{{ request.user|cart_item_count }}</span>
                                           </span>
-                                          <span class="cart-title">Your cart <br><strong>$190.00</strong></span> 
+                                          <span class="cart-title">Your cart <br>{{ request.user|cart_item_total }}$</span> 
                                       </a>
                                      <!--Cart Dropdown Start-->
                                     <div class="cart-dropdown">
-                                        <ul>
-                                            <li class="single-cart-item">
-                                                <div class="cart-img">
-                                                    <a href="single-product.html"><img src="{% static 'img/cart/cart1.jpg' %}" alt=""></a>
-                                                </div>
-                                                <div class="cart-content">
-                                                    <h5 class="product-name"><a href="single-product.html">Odio tortor consequat</a></h5>
-                                                    <span class="cart-price">1 × $90.00</span>
-                                                </div>
-                                                <div class="cart-remove">
-                                                    <a title="Remove" href="#"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="single-cart-item">
-                                                <div class="cart-img">
-                                                    <a href="single-product.html"><img src="{% static 'img/cart/cart2.jpg' %}" alt=""></a>
-                                                </div>
-                                                <div class="cart-content">
-                                                    <h5 class="product-name"><a href="single-product.html">Auctor sem</a></h5>
-                                                    <span class="cart-price">1 × $100.00</span>
-                                                </div>
-                                                <div class="cart-remove">
-                                                    <a title="Remove" href="#"><i class="fa fa-times"></i></a>
-                                                </div>
-                                            </li>
-                                         </ul> 
-                                        <p class="cart-subtotal"><strong>Subtotal:</strong> <span class="float-right">$190.00</span></p> 
-                                        <p class="cart-btn">
-                                            <a href="/order_summary">View cart</a>
-                                            <a href="/checkout">Checkout</a>
-                                        </p>
+                                          <ul>
+                                          {% for order_item in request.user|order_items %}
+                                          <li class="single-cart-item">
+                                              {% with order_item.item.product_images|split:"," as images %}
+                                              {% for image in images %} 
+                                              {% if forloop.counter == 1 %} 
+                                              <div class="cart-img">
+                                                  <a href="/products/{{order_item.shop}}/{{order_item.item.id}}/"><img src="{{ image|escape }}" alt="cart_item.display_name"></a>
+                                              </div>
+                                              <div class="cart-content">
+                                                  <h5 class="product-name"><a href="/products/{{order_item.shop}}/{{order_item.item.id}}/">{{order_item.item.display_name}}</a></h5>
+                                                  <span class="cart-price">{{order_item.quantity}} × ${{order_item.item.product_unit_price}} = {{order_item.get_total_price}}$</span>
+                                              </div>
+                                              <div class="cart-remove">
+                                                      <a title="Remove" href="{% url 'core:remove_from_the_cart' order_item.item.slug %}"><i class="fa fa-times"></i></a>
+                                              </div>
+                                              {% endif %}
+                                              {% endfor %}
+                                              {% endwith %}
+                                          {% endfor %}    
+
+                                      <ul>
+                                      <p class="cart-subtotal"><strong>Subtotal : {{request.user|cart_item_total}}$</strong> <span class="float-right"></span></p> 
+                                      <p class="cart-btn">
+                                          <a href="/order_summary">View cart</a>
+                                          <a href="/checkout">Checkout</a>
+                                      </p>
                                     </div>
                                      <!--Cart Dropdown End--> 
                                   </div>

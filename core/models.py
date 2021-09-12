@@ -4,6 +4,7 @@ from django.conf import settings
 from django.shortcuts import reverse
 
 from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
 
 LABEL_CHOICES = (
     ('P', 'primary'),
@@ -165,23 +166,24 @@ class Item(models.Model):
 
 class OrderItem(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    item = models.ForeignKey(Item, on_delete=models.CASCADE)
+    item = models.ForeignKey(dolloarItem, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)
+    shop = models.IntegerField(default=1)
 
     def __str__(self):
-        return f"{self.quantity} of {self.item.item_name}"
+        return f"{self.quantity} of {self.item.display_name}"
 
     def get_total_price(self):
-        return self.item.price * self.quantity
+        return self.item.product_unit_price * float(self.quantity)
     
     def get_total_discount_price(self):
-        return self.item.discount_price * self.quantity
-
+        # return self.item.discount_price * self.quantity
+        return 0
     def get_final_price(self):
-        if self.item.discount_price:
-            return self.get_total_discount_price()
-        else:
+        #if self.item.discount_price:
+         #   return self.get_total_discount_price()
+        #else:
             return self.get_total_price()
 
 

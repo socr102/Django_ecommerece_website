@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
+{% load product_description %}
+
+
+
 {% block content %}
+
   <!--Breadcrumb Tow Start-->
   <div class="breadcrumb-tow mb-120">
     <div class="container">
@@ -40,23 +45,29 @@
                         <tbody>
                           {% for order_item in object.items.all %}
                             <tr>
-                                <td class="plantmore-product-thumbnail"><a href="#"><img src="{{order_item.item.item_image.url}}" alt=""></a></td>
-                                <td class="plantmore-product-name"><a href="#">{{order_item.item.item_name}}</a></td>
+                                {% with order_item.item.product_images|split:"," as images %}
+                                {% for image in images %} 
+                                {% if forloop.counter == 1 %} 
+                                <td class="plantmore-product-thumbnail"><a href="/products/{{order_item.shop}}/{{order_item.item.id}}"><img src = "{{ image|escape }}" alt="order_item.item.display_name" style="width:25%;height:25%"></a></td>
+                                {% endif %}
+                                {% endfor %}
+                                {% endwith %}
+                                <td class="plantmore-product-name"><a href="/products/{{order_item.shop}}/{{order_item.item.id}}">{{order_item.item.display_name}}</a></td>
                                 <td class="plantmore-product-price">
                                   {% if order_item.item.discount_price %}
                                   <span class="amount">$&nbsp;{{order_item.item.discount_price}}</span>
                                   {% else %}
-                                  <span class="amount">$&nbsp;{{order_item.item.price}}</span>
+                                  <span class="amount">$&nbsp;{{order_item.item.product_unit_price  }}</span>
                                   {% endif %}
                                 </td>
                                 <td class="plantmore-product-quantity">
-                                    <input value="{{order_item.quantity}}" type="number">
+                                    <input value="{{order_item.quantity}}" type="number" min= "1" id="quantity{{order_item.id}}" onchange="quantity(this.value,{{order_item.id}},{{order_item.user_id}})" > 
                                 </td>
                                 <td class="product-subtotal">
                                   {% if order_item.item.discount_price %}
-                                  <span class="amount">$&nbsp;{{order_item.get_total_discount_price}}</span>
+                                  <span class="amount" id="total{{order_item.id}}">$&nbsp;{{order_item.get_total_discount_price}}</span>
                                   {% else %}
-                                  <span class="amount">$&nbsp;{{order_item.get_total_price}}</span>
+                                  <span class="amount"id="total{{order_item.id}}">$&nbsp;{{order_item.get_total_price}}</span>
                                   {% endif %}
                                 </td>
                                 <td class="plantmore-product-remove"><a href="{% url 'core:remove_from_the_cart' order_item.item.slug %}"><i class="fa fa-times"></i></a></td>
@@ -89,8 +100,8 @@
                         <div class="cart-page-total">
                             <h2>Cart totals</h2>
                             <ul>
-                                <li>Subtotal <span>$&nbsp;{{object.get_total}}</span></li>
-                                <li>Total <span>$&nbsp;{{object.get_total}}</span></li>
+                                <li>Subtotal <span class="cart_sub_total">$&nbsp;{{object.get_total}}</span></li>
+                                <li>Total <span class="cart_total">$&nbsp;{{object.get_total}}</span></li>
                             </ul>
                             <a href="/checkout/">Proceed to checkout</a>
                         </div>
@@ -103,6 +114,31 @@
 </div>
 <!--Shopping Cart Area End-->
 
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function quantity(e,id,user_id){
+      console.log(id);
+      console.log(e);
+      $.ajax({
+            url: '/quantity/',
+            type:"POST",
+            data: {
+              'item_id': id,
+              'counter':e,
+              'user_id':user_id
+            },
+            success: function (data) {
+                document.querySelector("#total"+id).innerHTML = data['total'];
+                document.querySelector(".cart_total").innerHTML = data['cart_total_price'];
+                document.querySelector(".cart_sub_total").innerHTML = data['cart_total_price'];
+
+
+            }
+        });
+    }
+</script>
 {% endblock %}
 
 
