@@ -3,6 +3,8 @@
 {% load static %}
 {% load pagination %}
 {% block content %}
+{% load i18n %}
+
 <!--Shop Area Start-->
 <div class="shop-area mb-70">
     <div class="container">
@@ -10,7 +12,7 @@
             <div class="col-lg-3 order-2 order-lg-1">
                 <!--Product Category Widget Start-->
                 <div class="shop-sidebar">
-                    <h4>Product Categories</h4>
+                    <h4>{% trans "Product Categories" %}</h4>
                     <div  id = "tree" class="categori-checkbox">
 
                             <ul>
@@ -24,13 +26,13 @@
                 <!--Product Category Widget End-->
                 <!--Color Category Widget Start-->
                 <div class="shop-sidebar">
-                    <h4>Color</h4>
+                    <h4>{% trans "Color" %}</h4>
                     <div class="categori-checkbox">
                         <form action="#">
                             <ul>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Gold</a><span class="count">(1)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">Green</a><span class="count">(4)</span></li>
-                                <li><input name="product-categori" type="checkbox"><a href="#">White</a><span class="count">(5)</span></li>
+                                <li><input name="product-categori" type="checkbox"><a href="#">{% trans "Gold" %}</a><span class="count">(1)</span></li>
+                                <li><input name="product-categori" type="checkbox"><a href="#">{% trans "Green" %}</a><span class="count">(4)</span></li>
+                                <li><input name="product-categori" type="checkbox"><a href="#">{% trans "White" %}</a><span class="count">(5)</span></li>
                             </ul>
                         </form>
                     </div>
@@ -38,7 +40,7 @@
                 <!--Color Category Widget End-->
                 <!--Price Filter Widget Start-->
                 <div class="shop-sidebar">
-                    <h4>Filter by price</h4>
+                    <h4>{% trans "Filter by price" %}</h4>
                     <div class="price-filter">
                         <div id="slider-range"></div>
                         <div class="price-slider-amount">
@@ -46,14 +48,14 @@
                                 <label>price : </label>
                                 <input type="text" id="amount" name="price"  placeholder="Add Your Price" />
                             </div>
-                            <button type="button">Filter</button> 
+                            <button type="button">{% trans "Filter" %}</button> 
                         </div>
                     </div>
                 </div>
                 <!--Price Filter Widget End-->
                 <!--Recent Product Widget Start-->
                 <div class="shop-sidebar">
-                    <h4>Top Rated Products</h4>
+                    <h4>{% trans "Top Rated Products" %}</h4>
                     <div class="rc-product">
                         <ul>
                             <li>
@@ -61,7 +63,7 @@
                                     <a href="/products/Sofa-Sets/"><img src="{% static 'img/product/product13.jpg' %}" alt=""></a>
                                 </div>
                                 <div class="rc-product-content">
-                                    <h6><a href="/products/Sofa-Sets/">Ornare sed consequat</a></h6>
+                                    <h6><a href="/products/Sofa-Sets/">{% trans "Ornare sed consequat" %}</a></h6>
                                     <div class="rc-product-review">
                                         <i class="fa fa-star"></i>
                                         <i class="fa fa-star"></i>

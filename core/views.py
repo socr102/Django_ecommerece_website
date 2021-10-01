@@ -17,7 +17,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
-
+from django.views.decorators.clickjacking import xframe_options_exempt
 import requests
 from decimal import Decimal
 from sslcommerz_python.payment import SSLCSession
@@ -239,7 +239,28 @@ def is_valid_form(list_of_values):
 		if value == "":
 			return False
 	return valid
-
+@csrf_exempt
+def viewcartalluser(request):
+	context = Cart.objects.filter(ordered = False)
+	data = {
+	 'carts':context
+	}
+	if request.method=="POST":
+		print("post")
+	return render(request,"shipper.html",data)
+@xframe_options_exempt
+def showcart(request,user_id):
+	OrderItems = OrderItem.objects.filter(user_id = user_id)
+	order_items = []
+	order_items_detail = []
+	for order_item in OrderItems:
+		order_items.append(order_item)
+		order_items_detail.append(dolloarItem.objects.get(pk = order_item.item_id))
+	data = {
+		'order_items' : order_items,
+		'order_items_detail' : order_items_detail
+	}
+	return render(request,'shipper_cart.html',data)
 
 class CheckoutView(LoginRequiredMixin, View):
 	def get(self, *args, **kwargs):

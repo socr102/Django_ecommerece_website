@@ -1,7 +1,8 @@
+      {% load i18n %}
       <nav class="navbar navbar-expand-lg navbar-dark mdb-color lighten-3 mt-3 mb-5">
 
         <!-- Navbar brand -->
-        <span class="navbar-brand">Categories:</span>
+        <span class="navbar-brand">{% trans "Categories" %}</span>
 
         <!-- Collapse button -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
@@ -25,7 +26,7 @@
           <form class="form-inline" method="get" action="/">
             <div class="md-form my-0">
               <input class="form-control mr-sm-2" type="text" name="key" placeholder="Search by name/category" aria-label="Search">
-                <button type="submit">Search</button>
+                <button type="submit">{% trans "Search" %}</button>
             </div>
           </form>
         </div>

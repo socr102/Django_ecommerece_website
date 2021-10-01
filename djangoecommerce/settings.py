@@ -7,7 +7,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'nabil.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,6 +46,7 @@ SOCIALACCOUNT_PROVIDERS = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -106,6 +107,19 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+LANGUAGES = [
+  ('en-us', 'English'),
+  ('ar', 'Arabic'),
+  ('zh-hans', 'Simplified Chinese'),
+]
+
+
+
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -133,10 +147,23 @@ LOGIN_REDIRECT_URL = '/'
 
 ACCOUNT_LOGOUT_REDIRECT_URL = "/accounts/login"
 
-STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
 
-STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
+if DEBUG:
+    STRIPE_PUBLISHABLE_KEY = 'test_publishable_key'
+    STRIPE_SECRET_KEY = 'test_secret_key'
+# Uncomment these lines if you have a live keys
+# else:
+#     STRIPE_PUBLISHABLE_KEY = 'production_publishable_key'
+#     STRIPE_SECRET_KEY = 'production_secret_key'
+
+
+#STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+
+#STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
 
 SSLC_STORE_ID = config('SSLC_STORE_ID')
 
 SSLC_STORE_PASSWORD = config('SSLC_STORE_PASSWORD')
+
+ClientID = "ASxcA_c7DZvRV-hV3tOHohr1olWY5vVlL0OQNXaO2hJsGRz8QFQvbVH29wjN5bF04uJyXl4qVNAW28Au"
+Secret = "EDk9pMXKh-XtT_uim4233ExyGNYrwKIgEaikc6zpWVTHMXnKCoos66_HZfPPRlImoqKE8njCf6KQSvpc"

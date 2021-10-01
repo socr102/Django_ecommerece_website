@@ -2,7 +2,7 @@
 {% block content %}
 {% load countries %}
 {% load crispy_forms_tags %}
-
+{% load i18n %}
 <!--Breadcrumb Tow Start-->
 <div class="breadcrumb-tow-checkout mb-120">
   <div class="container">
@@ -13,8 +13,8 @@
               </div>
               <div class="breadcrumb-content breadcrumb-content-tow">
                   <ul>
-                      <li><a href="/">Home</a></li>
-                      <li class="active">Checkout</li>
+                      <li><a href="/">{% trans "Home" %}</a></li>
+                      <li class="active">{% trans "CheckOut" %}</li>
                   </ul>
               </div>
           </div>
@@ -29,7 +29,7 @@
           <div class="col-12">
               <div class="coupon-accordion">
                   <!--Accordion Start-->
-                  <h3>Have a coupon? <span id="showcoupon">Click here to enter your code</span></h3>
+                  <h3>{% trans "Have a coupon" %}? <span id="showcoupon">{% trans "Click here to enter your code" %}</span></h3>
                   <div id="checkout_coupon" class="coupon-checkout-content">
                       <div class="coupon-info">
                           <form action="#">
@@ -48,23 +48,23 @@
       <div class="col-lg-6 col-12">
           <form action="#">
               <div class="checkbox-form">
-                  <h3>Billing Details</h3>
+                  <h3>{% trans "Billing Details" %}</h3>
                   <div class="row">
                     <div class="col-md-6">
                           <div class="checkout-form-list">
-                              <label>First Name <span class="required">*</span></label>
+                              <label>{% trans "First Name" %} <span class="required">*</span></label>
                               <input placeholder="" type="text">
                           </div>
                       </div>
                       <div class="col-md-6">
                           <div class="checkout-form-list">
-                              <label>Last Name <span class="required">*</span></label>
+                              <label>{% trans "Last Name" %} <span class="required">*</span></label>
                               <input placeholder="" type="text">
                           </div>
                       </div>
                       <div class="col-md-12">
                           <div class="checkout-form-list">
-                              <label>Address <span class="required">*</span></label>
+                              <label>{% trans "Address" %} <span class="required">*</span></label>
                               <input placeholder="Street address" type="text">
                           </div>
                       </div>
@@ -76,7 +76,7 @@
                       <div class="col-md-12">
                           <div class="country-select clearfix wrapper">
                               {% get_countries as countries %}
-                              <label>Country <span class="required">*</span></label>
+                              <label>{% trans "Country" %} <span class="required">*</span></label>
                               <!-- <div class="country"> -->
                                 <select class="wide"size="5" >
                                       {% for country in countries %}
@@ -89,7 +89,7 @@
 
                       <div class="col-md-6">
                           <div class="checkout-form-list">
-                              <label>Postcode / Zip <span class="required">*</span></label>
+                              <label>{% trans "Postcode / Zip" %}<span class="required">*</span></label>
                               <input placeholder="30000" type="text">
                           </div>
                       </div>
@@ -98,27 +98,27 @@
                   <div class="different-address">
                       <div class="ship-different-title">
                           <h3>
-                                  <label>Ship to a different address?</label>
+                                  <label>{% trans "Ship to a different address?" %}</label>
                                   <input id="ship-box" type="checkbox">
                               </h3>
                       </div>
                       <div id="ship-box-info" class="row">
                               <div class="col-md-6">
                                   <div class="checkout-form-list">
-                                      <label>First Name <span class="required">*</span></label>
+                                      <label>{% trans "First Name" %} <span class="required">*</span></label>
                                       <input placeholder="" type="text">
                                   </div>
                               </div>
                               <div class="col-md-6">
                                   <div class="checkout-form-list">
-                                      <label>Last Name <span class="required">*</span></label>
+                                      <label>{% trans "Last Name" %}<span class="required">*</span></label>
                                       <input placeholder="" type="text">
                                   </div>
                               </div>
                               <div class="col-md-12">
                                 <div class="country-select clearfix">
                                     {% get_countries as countries %}
-                                    <label>Country <span class="required">*</span></label>
+                                    <label>{% trans "Country" %} <span class="required">*</span></label>
                                     <select class="wide">
                                           {% for country in countries %}
                                           <option value="{{ country.code }}">{{ country.name }}</option>
@@ -128,7 +128,7 @@
                               </div>
                               <div class="col-md-12">
                                   <div class="checkout-form-list">
-                                      <label>Address <span class="required">*</span></label>
+                                      <label>{% trans "Address" %} <span class="required">*</span></label>
                                       <input placeholder="Street address" type="text">
                                   </div>
                               </div>
@@ -139,14 +139,14 @@
                               </div>
                               <div class="col-md-12">
                                   <div class="checkout-form-list">
-                                      <label>Postcode / Zip <span class="required">*</span></label>
+                                      <label>{% trans "Postcode / Zip" %} <span class="required">*</span></label>
                                       <input placeholder="" type="text">
                                   </div>
                               </div>
                       </div>
                       <div class="order-notes">
                           <div class="checkout-form-list">
-                              <label>Order Notes</label>
+                              <label>{% trans "Order Notes" %}</label>
                               <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                           </div>
                       </div>
@@ -156,13 +156,13 @@
       </div>
       <div class="col-lg-6 col-12">
           <div class="your-order">
-              <h3>Your order</h3>
+              <h3>{% trans "Your order" %}</h3>
               <div class="your-order-table table-responsive">
                   <table class="table">
                       <thead>
                           <tr>
-                              <th class="cart-product-name">Product</th>
-                              <th class="cart-product-total">Total</th>
+                              <th class="cart-product-name">{% trans "Product" %}</th>
+                              <th class="cart-product-total">{% trans "Total" %}</th>
                           </tr>
                       </thead>
                       <tbody>
@@ -176,7 +176,7 @@
                       </tbody>
                       <tfoot>
                           <tr class="cart-subtotal">
-                              <th>Cart Subtotal</th>
+                              <th>{% trans "Cart Subtotal" %}</th>
                               <td><span class="amount">{{orders.get_total}}$</span></td>
                           </tr>
                           <tr class="order-total">
@@ -193,13 +193,14 @@
                               <div class="card-header" id="#payment-1">
                                 <h5 class="panel-title">
                                   <a class="" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Direct Bank Transfer.
+                                    {% trans "Direct Bank Transfer." %}
                                   </a>
                                 </h5>
                               </div>
                               <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
                                 <div class="card-body">
-                                  <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                  <p>{% trans "Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account." %}
+                                  </p>
                                 </div>
                               </div>
                             </div>
@@ -207,13 +208,14 @@
                               <div class="card-header" id="#payment-2">
                                 <h5 class="panel-title">
                                   <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Cheque Payment
+                                    {% trans "Cheque Payment" %}
+                                    
                                   </a>
                                 </h5>
                               </div>
                               <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
                                 <div class="card-body">
-                                  <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                  <p>{% trans "Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account." %}</p>
                                 </div>
                               </div>
                             </div>
@@ -221,13 +223,13 @@
                               <div class="card-header" id="#payment-3">
                                 <h5 class="panel-title">
                                   <a class="collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    PayPal
+                                    {% trans "PayPal" %}
                                   </a>
                                 </h5>
                               </div>
                               <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
                                 <div class="card-body">
-                                  <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                                  <p>{% trans "Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account." %}</p>
                                 </div>
                               </div>
                             </div>

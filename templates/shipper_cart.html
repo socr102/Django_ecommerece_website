@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load product_description %}
+{% block content %}
+<div class = "container">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-content table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="plantmore-product-thumbnail">{% trans "images" %}</th>
+                            <th class="cart-product-name">{% trans "Product" %}</th>
+                            <th class="plantmore-product-price">{% trans "Unit Price" %}</th>
+                            <th class="plantmore-product-price">{% trans "Case Price" %}</th>
+                            <th class="plantmore-product-quantity">{% trans "Quantity" %}</th>
+                            <!-- <th class="plantmore-product-subtotal">{% trans "Total" %}</th> -->
+                            <th class="plantmore-product-subtotal">{% trans "Shop" %}</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                      {% for order_item in order_items_detail %}
+                        <tr>
+                            {% with order_item.product_images|split:"," as images %}
+                            {% for image in images %} 
+                            {% if forloop.counter == 1 %} 
+                            	{% with order_items|shop:forloop.counter as shop %}
+                                	 <td class="plantmore-product-thumbnail"><a href="/products/{{shop}}/{{order_item.id}}"><img src = "{{ image|escape }}" alt="order_item.display_name" style="width:25%;height:25%"></a></td>
+                            	{% endwith %}
+                            {% endif %}
+                            {% endfor %}
+                            {% endwith %}
+                            <td class="plantmore-product-name"><a href="/products/{{order_item.shop}}/{{order_item.id}}">{{order_item.display_name}}</a></td>
+                            <td class="plantmore-product-price">
+                              <span class="amount">$&nbsp;{{order_item.product_unit_price}}</span>
+                            </td>
+                            <td class="plantmore-product-price">  
+                              <span class="amount">$&nbsp;{{order_item.product_case_price  }}</span>
+                            </td>
+                            <td class="plantmore-product-quantity">
+                                <span class = "amount"> 
+                                	{% with order_items|quantity:forloop.counter as amount %}
+                                	{{amount}}
+                                	{% endwith %}
+                            	</span>
+                            </td>
+                            <td class="product-subtotal">
+                            	<span class = "amount"> 
+                                	{% with order_items|shop:forloop.counter as shop %}
+                                	{{shop}}
+                                	{% endwith %}
+                            	</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                          <td colspan="5">{% trans "Your cart is empty" %}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>    
+    <div class="row" style="padding:10px">
+        <div class="col-sm-1">
+            <span>Fee</span>
+        </div>
+        <div class="col-sm-11">
+            <form action="/viewcartalluser/" method="post"class="form-inline">
+                {% csrf_token %}
+                <input type="number" class="form-control" min="0" placeholder="Please wirte the fee and send it buyer.." required="">
+                <button type="submit" class="btn btn-info" type="button">Send</button>  
+            </form>    
+        </div>  
+    </div>
+</div>
+{% endblock %}

@@ -175,7 +175,7 @@ class OrderItem(models.Model):
         return f"{self.quantity} of {self.item.display_name}"
 
     def get_total_price(self):
-        return self.item.product_unit_price * float(self.quantity)
+        return self.item.product_case_price * float(self.quantity)
     
     def get_total_discount_price(self):
         # return self.item.discount_price * self.quantity

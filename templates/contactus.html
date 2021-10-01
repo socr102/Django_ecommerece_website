@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
+{% load i18n %}
 <!--Breadcrumb Tow Start-->
 <div class="breadcrumb-tow-contact">
     <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="breadcrumb-title">
-                    <h1>Contact Us 02</h1>
+                    <h1>{% trans "Contact Us" %}</h1>
                 </div>
                 <div class="breadcrumb-content breadcrumb-content-tow">
                     <ul>
-                        <li><a href="/">Home</a></li>
-                        <li class="active">Contact Us-02</li>
+                        <li><a href="/">{% trans "Home" %}</a></li>
+                        <li class="active">{% trans "Contact Us" %}</li>
                     </ul>
                 </div>
             </div>
@@ -32,9 +32,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="section-title2 bl-color mb-70">
-                    <h3>CONTACT US</h3>
-                    <p>Claritas est etiam processus dynamicus, qui sequitur <br>
-                        mutationem consuetudium lectorum.</p>
+                    <h3>{% trans "Contact Us" %}</h3>
+                    <p>{% trans "laritas est etiam processus dynamicus, qui sequitur" %} <br>
+                       {% trans "mutationem consuetudium lectorum." %} </p>
                 </div>
             </div>
         </div>
@@ -46,8 +46,8 @@
                         <i class="fa fa-map-marker"></i>
                     </div>
                     <div class="contact-info">
-                        <h2>Address Street</h2>
-                        <p>Address : No 40 Baria Sreet 133/2 <br> NewYork City, NY, United States.</p>
+                        <h2>{% trans "Address Street" %}</h2>
+                        <p>{% trans "Address : No 40 Baria Sreet 133/2" %} <br>{% trans " NewYork City, NY, United States." %}</p>
                     </div>
                 </div>
             </div>
@@ -59,8 +59,8 @@
                         <i class="fa fa-phone"></i>
                     </div>
                     <div class="contact-info">
-                        <h2>Number Phone</h2>
-                        <p>Phone 1: 0(1234) 567 89012 <br> Phone 2: 0(987) 567 890</p>
+                        <h2>{% trans "Phone Number " %}</h2>
+                        <p> <br>{% trans "Phone 2: 0(987) 567 890" %} </p>
                     </div>
                 </div>
             </div>
@@ -72,8 +72,8 @@
                         <i class="fa fa-fax"></i>
                     </div>
                     <div class="contact-info">
-                        <h2>Number Fax</h2>
-                        <p>Fax 1: 0(1234) 567 89012 <br> Fax 2: 0(987) 567 890</p>
+                        <h2>{% trans "Fax Number" %}</h2>
+                        <p>{% trans "Fax 1: 0(1234) 567 89012" %} <br>{% trans "Fax 2: 0(987) 567 890" %} </p>
                     </div>
                 </div>
             </div>
@@ -85,8 +85,8 @@
                         <i class="fa fa-envelope-o"></i>
                     </div>
                     <div class="contact-info">
-                        <h2>Address email</h2>
-                        <p>info@example.com <br> info@yourmail.com</p>
+                        <h2>{% trans "Email Address" %}</h2>
+                        <p>{% trans "info@example.com" %} <br>{% trans "info@yourmail.com" %} </p>
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
             <div class="col-md-12">
                 <div class="contact-form-area">
                     <div class="contact-form-title">
-                        <h2>TELL US YOUR PROJECT</h2>
+                        <h2>{% trans "TELL US YOUR PROJECT" %}</h2>
                     </div>
                     <form id="contact-form" action="mail.php" method="post">
                         <div class="row">
@@ -129,7 +129,7 @@
                             <div class="col-md-12">
                                 <div class="contact-form-style form-style-2">
                                     <textarea name="message" placeholder="Type your message here.."></textarea>
-                                    <button class="form-button btn-style-2" type="submit"><span>Send Email</span></button>
+                                    <button class="form-button btn-style-2" type="submit"><span>{% trans "Send Email" %}</span></button>
                                 </div>
                             </div>
                         </div>

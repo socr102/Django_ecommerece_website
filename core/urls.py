@@ -29,4 +29,6 @@ urlpatterns = [
      path('complete/', complete, name='complete'),
      path('complete_payment/<tran_id>/<payment_type>/',complete_payment, name='complete_payment'),
      path('contactus/',ContactUsView.as_view(), name='contactus'),
+     path('viewcartalluser/',viewcartalluser, name='viewcartalluser'),
+     path('viewcart/<user_id>/',showcart,name = "showcart"),
 ]

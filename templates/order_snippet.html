@@ -1,6 +1,7 @@
+{% load i18n %}
 <div class="col-md-12 mb-4">
   <h4 class="d-flex justify-content-between align-items-center mb-3">
-  <span class="text-muted">Your cart</span>
+  <span class="text-muted">{% trans "Your cart" %}</span>
   <span class="badge badge-secondary badge-pill">{{ order.items.count }}</span>
   </h4>
   <ul class="list-group mb-3 z-depth-1">
@@ -23,19 +24,19 @@
   </li>
   {% endif %}
   <li class="list-group-item d-flex justify-content-between">
-      <span>Total (BDT)</span>
+      <span>{% trans "Total (BDT)" %}</span>
       <strong>{{ orders.get_total }}</strong>
   </li>
   </ul>
 
   {% if DISPLAY_COUPON_FORM %}
   <form class="card p-2" action="{% url 'core:add_coupon' %}" method="POST">
-      <p>Promo Code = Django</p>
+      <p>{% trans "Promo Code" %} = {% trans "Django" %}</p>
       {% csrf_token %}
       <div class="input-group">
           {{ coupon_form.coupon_code }}
           <div class="input-group-append">
-          <button class="btn btn-secondary btn-md waves-effect m-0" type="submit">Redeem</button>
+          <button class="btn btn-secondary btn-md waves-effect m-0" type="submit">{% trans "Redeem" %}</button>
           </div>
       </div>
   </form>

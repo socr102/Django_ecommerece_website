@@ -11,3 +11,4 @@ mysqlclient
 selenium
 pandas
 mysql-connector
+django-paypal

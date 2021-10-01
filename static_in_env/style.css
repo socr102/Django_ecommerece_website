@@ -257,7 +257,7 @@ mark {
 
 .section-title>h3 {
 	font-size: 35px;
-	font-family: 'Yesteryear', cursive;
+	font-family:  cursive;
 	margin-bottom: 0px;
 	padding-bottom: 25px;
 }
@@ -5335,7 +5335,7 @@ li.right-menu .cat-mega-menu>li {
 }
 
 .shop-sidebar>h4 {
-	font-family: 'Yesteryear', cursive;
+	font-family:  cursive;
 	font-size: 35px;
 	text-align: left;
 	font-weight: 400;

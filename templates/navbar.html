@@ -1,6 +1,6 @@
 {% load cart_template_tags %}
 {% load product_description %}
-
+{% load i18n %}
 {% load static %}
 <header>
   <div class="header-container">
@@ -11,7 +11,7 @@
                       <div class="col-lg-3 col-md-3">
                           <div class="logo-area">
                               <a href="index.html">
-                                  <img src="{% static 'img/logo/logo.png' %}" alt="">
+                                  <img src="{% static 'img/logo/logo.com.png' %}" alt="Logo" style="width:6em;height:6em">
                               </a>
                           </div>
                       </div>
@@ -22,10 +22,12 @@
                           <div class="header-menu">
                               <nav>
                                   <ul class="main-menu">
-                                      <li><a href="/">home</a></li>
-                                      <li><a href="/shop/0/0/">Shops</a></li>
-                                      <li><a href="about.html">About Us</a></li>
-                                      <li><a href="/contactus">Contact Us</a></li>
+                                      <li><a href="/">{% trans "home" %}</a></li>
+                                      <li><a href="/shop/0/0/">{% trans "shops" %}</a></li>
+                                      <li><a href="#">{% trans "About Us" %}</a></li>
+                                      <li><a href="/viewcartalluser/">{% trans "Ship" %}</a></li>
+                                      <li><a href="/contactus">{% trans "Contact Us" %}</a></li>
+
                                   </ul>
                               </nav>
                           </div>
@@ -39,7 +41,7 @@
                                           <span class="cart-icon">
                                              <span class="cart-quantity">{{ request.user|cart_item_count }}</span>
                                           </span>
-                                          <span class="cart-title">Your cart <br>{{ request.user|cart_item_total }}$</span> 
+                                          <span class="cart-title">{% trans "your cart" %}<br>{{ request.user|cart_item_total }}$</span> 
                                       </a>
                                      <!--Cart Dropdown Start-->
                                     <div class="cart-dropdown">
@@ -54,7 +56,7 @@
                                               </div>
                                               <div class="cart-content">
                                                   <h5 class="product-name"><a href="/products/{{order_item.shop}}/{{order_item.item.id}}/">{{order_item.item.display_name}}</a></h5>
-                                                  <span class="cart-price">{{order_item.quantity}} × ${{order_item.item.product_unit_price}} = {{order_item.get_total_price}}$</span>
+                                                  <span class="cart-price">{{order_item.quantity}} × ${{order_item.item.product_case_price}} = {{order_item.get_total_price}}$</span>
                                               </div>
                                               <div class="cart-remove">
                                                       <a title="Remove" href="{% url 'core:remove_from_the_cart' order_item.item.slug %}"><i class="fa fa-times"></i></a>
@@ -67,8 +69,8 @@
                                       <ul>
                                       <p class="cart-subtotal"><strong>Subtotal : {{request.user|cart_item_total}}$</strong> <span class="float-right"></span></p> 
                                       <p class="cart-btn">
-                                          <a href="/order_summary">View cart</a>
-                                          <a href="/checkout">Checkout</a>
+                                          <a href="/order_summary">{% trans "View Cart" %}</a>
+                                          <a href="/checkout">{% trans "CheckOut" %}</a>
                                       </p>
                                     </div>
                                      <!--Cart Dropdown End--> 
@@ -89,11 +91,26 @@
                                           <a href="#"><i class="fa fa-th"></i></a>
                                           <div class="currency-dropdown">
                                               <ul class="menu-top-menu">
-                                                  <li><a href="/account">My Account</a></li>
-                                                  <li><a href="/wishlist">Wishlist</a></li>
-                                                  <li><a href="/order_summary">Shopping cart</a></li>
-                                                  <li><a href="/checkout">Checkout</a></li>
-                                                  <li><a href="/accounts/logout/">Log Out</a></li>
+                                                  <li><a href="/account">{% trans "My account" %}</a></li>
+                                                  <li><a href="">{% trans "Select languages" %}</a></li>
+                                                    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                                                      <select name="language">
+                                                            {% get_current_language as LANGUAGE_CODE %}
+                                                            {% get_available_languages as LANGUAGES %}
+                                                            {% get_language_info_list for LANGUAGES as languages %}
+                                                            {% for language in languages %}
+                                                                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                                                    {{ language.name_local }} ({{ language.code }})
+                                                                </option>
+                                                            {% endfor %}
+                                                        </select>
+                                                        <input type="submit" value="Confirm">
+                                                    </form>
+                                                  <li><a href="/wishlist">{% trans "Wishlist" %}</a></li>
+                                                  <li><a href="/order_summary">{% trans "Shopping cart" %}</a></li>
+                                                  <li><a href="/checkout">{% trans "CheckOut" %}</a></li>
+                                                  <li><a href="/accounts/logout/">{% trans "Log Out" %}</a></li>
+
                                               </ul>
                                           </div>
                                       </div>
@@ -104,6 +121,7 @@
 
                           {% endif %}
                           <!--Header Option End--> 
+ 
                       </div>
                       <!--Header Menu And Mini Cart End-->
                   </div>

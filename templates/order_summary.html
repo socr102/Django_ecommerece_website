@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load product_description %}
-
-
+{% load i18n %}
+   
 
 {% block content %}
 
@@ -15,8 +15,8 @@
                 </div>
                 <div class="breadcrumb-content breadcrumb-content-tow">
                     <ul>
-                        <li><a href="/">Home</a></li>
-                        <li class="active">Shopping Cart</li>
+                        <li><a href="/">{% trans "Home" %}</a></li>
+                        <li class="active">{% trans "Shopping Cart" %}</li>
                     </ul>
                 </div>
             </div>
@@ -34,12 +34,12 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="plantmore-product-thumbnail">images</th>
-                                <th class="cart-product-name">Product</th>
-                                <th class="plantmore-product-price">Unit Price</th>
-                                <th class="plantmore-product-quantity">Quantity</th>
-                                <th class="plantmore-product-subtotal">Total</th>
-                                <th class="plantmore-product-remove">remove</th>
+                                <th class="plantmore-product-thumbnail">{% trans "images" %}</th>
+                                <th class="cart-product-name">{% trans "Product" %}</th>
+                                <th class="plantmore-product-price">{% trans "Case Price" %}</th>
+                                <th class="plantmore-product-quantity">{% trans "Quantity" %}</th>
+                                <th class="plantmore-product-subtotal">{% trans "Total" %}</th>
+                                <th class="plantmore-product-remove">{% trans "remove" %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +57,7 @@
                                   {% if order_item.item.discount_price %}
                                   <span class="amount">$&nbsp;{{order_item.item.discount_price}}</span>
                                   {% else %}
-                                  <span class="amount">$&nbsp;{{order_item.item.product_unit_price  }}</span>
+                                  <span class="amount">$&nbsp;{{order_item.item.product_case_price  }}</span>
                                   {% endif %}
                                 </td>
                                 <td class="plantmore-product-quantity">
@@ -74,7 +74,7 @@
                             </tr>
                             {% empty %}
                             <tr>
-                              <td colspan="5">Your cart is empty</td>
+                              <td colspan="5">{% trans "Your cart is empty" %}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -98,12 +98,12 @@
                 <div class="row">
                     <div class="col-md-5 ml-auto">
                         <div class="cart-page-total">
-                            <h2>Cart totals</h2>
+                            <h2>{% trans "Cart totals" %}</h2>
                             <ul>
-                                <li>Subtotal <span class="cart_sub_total">$&nbsp;{{object.get_total}}</span></li>
-                                <li>Total <span class="cart_total">$&nbsp;{{object.get_total}}</span></li>
+                                <li>{% trans "Subtotal" %} <span class="cart_sub_total">$&nbsp;{{object.get_total}}</span></li>
+                                <li>{% trans "Total" %} <span class="cart_total">$&nbsp;{{object.get_total}}</span></li>
                             </ul>
-                            <a href="/checkout/">Proceed to checkout</a>
+                            <a href="/checkout/">{% trans "Proceed to checkout" %}</a>
                         </div>
                     </div>
                 </div>

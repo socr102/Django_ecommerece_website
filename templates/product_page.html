@@ -1,5 +1,5 @@
-
 {% extends 'base.html' %}
+{% load i18n %}
 {% load product_description %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -13,8 +13,8 @@
                 </div>
                 <div class="breadcrumb-content breadcrumb-content-product">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li class="active">Product detail</li>
+                        <li><a href="index.html">{% trans "Home" %}</a></li>
+                        <li class="active">{% trans "Product detail" %}</li>
                     </ul>
                 </div>
             </div>
@@ -103,8 +103,8 @@
                             <a class="review-link" href="#">(1 customer review)</a>
                         </div>
                         <div class="single-product-price">
-                          <span class="regular-price">Case : ${{item.product_case_price}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-                          <span class="regular-price">Unit : ${{item.product_unit_price}}</span>
+                          <span class="regular-price">{% trans "Case : " %}${{item.product_case_price}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                          <span class="regular-price">{% trans "Unit : " %}${{item.product_unit_price}}</span>
                         </div>
                         <div class="product-description">
                             {% with item.product_speciation|split:"', '" as skills %}
@@ -113,17 +113,17 @@
                             {% endfor %}
                             {% endwith %}
                         </div>
-                        <p class="stock in-stock">150 in stock</p>
+                        <p class="stock in-stock">{% trans "150 in stock" %}</p>
                         <div class="single-product-quantity">
                             <form class="add-quantity" action="/add_to_cart/{{shop_id}}/{{item.slug}}/">
                                 <div class="add-to-link">
-                                    <button class="product-btn" data-text="add to cart">add to cart</button>
+                                    <button class="product-btn" data-text="add to cart">{% trans "add to cart" %}</button>
                                 </div>
                             </form>
                        </div>
                         <div class="wishlist-compare-btn">
-                            <a href="" class="wishlist-btn">Add to Wishlist</a>
-                            <a href="#" class="add-compare">Compare</a>
+                            <a href="" class="wishlist-btn">{% trans "Add to Wishlist" %}</a>
+                            <a href="#" class="add-compare">{% trans "Compare" %}</a>
                         </div>
                         <div class="product-meta">
                             <!-- <span class="posted-in">
@@ -132,7 +132,7 @@
                             </span> -->
                         </div>
                         <div class="single-product-sharing">
-                            <h3>Share this product</h3>
+                            <h3>{% trans "Share this product" %}</h3>
                             <ul>
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -158,7 +158,7 @@
                     <!--Review And Description Tab Menu Start-->
                     <ul class="nav dec-and-review-menu">
                           <li>
-                            <a class="active" data-bs-toggle="tab" href="#description">Description</a>
+                            <a class="active" data-bs-toggle="tab" href="#description">{% trans "Description" %}</a>
                           </li>
                           <li>
                             {% if comments.count != 0 %}
@@ -196,7 +196,7 @@
                               <div class="review-page-comment">
                                 {% if comments %}
                                 {% for comment in comments %}
-                                <h2>1 review for Sit voluptatem</h2>
+                                <h2>{% trans "1 review for Sit voluptatem" %}</h2>
                                 <ul>
                                     <li>
                                         <div class="product-comment">
@@ -223,16 +223,16 @@
                                 {% if request.user.is_authenticated %}
                                 <div class="review-form-wrapper">
                                     <div class="review-form">
-                                        <span class="comment-reply-title">Add a review </span>
+                                        <span class="comment-reply-title">{% trans "Add a review" %} </span>
                                         <form action="" method="post">
                                           {% csrf_token %}
                                             <p class="comment-notes">
-                                                <span id="email-notes">Your email address will not be published.</span>
-                                                 Required fields are marked
+                                                <span id="email-notes">{% trans "Your email address will not be published." %}</span>{% trans "Required fields are marked" %}
+                                                 
                                                  <span class="required">*</span>
                                             </p>
                                             <div class="comment-form-rating">
-                                                <label>Your rating</label>
+                                                <label>{% trans "Your rating" %}</label>
                                                 <div class="rating">
                                                     <i class="fa fa-star-o"></i>
                                                     <i class="fa fa-star-o"></i>
@@ -243,19 +243,19 @@
                                             </div>
                                             <div class="input-element">
                                                 <div class="comment-form-comment">
-                                                    <label>Comment</label>
+                                                    <label>{% trans "Comment" %}</label>
                                                     <textarea name="message" cols="40" rows="8"></textarea>
                                                 </div>
                                                 <div class="review-comment-form-author">
-                                                    <label>Name </label>
+                                                    <label>{% trans "Name" %} </label>
                                                     <input required="required" type="text">
                                                 </div>
                                                 <div class="review-comment-form-email">
-                                                    <label>Email </label>
+                                                    <label>{% trans "Email" %}  </label>
                                                     <input required="required" type="text">
                                                 </div>
                                                 <div class="comment-submit">
-                                                    <button type="submit" class="form-button">Submit</button>
+                                                    <button type="submit" class="form-button">{% trans "Submit" %} </button>
                                                 </div>
                                             </div>
                                         </form>
@@ -280,7 +280,7 @@
             <!--Section Title Start-->
                 <div class="col-12">
                     <div class="section-title text-center mb-35">
-                        <h3>You may also like…</h3>
+                        <h3>{% trans "You may also like ..." %} </h3>
                     </div>
                 </div>
                 <!--Section Title End-->
@@ -307,7 +307,7 @@
                                                     {% endwith %}
                                                        
                                                 </a>
-                                                <span class="onsale">Sale!</span>
+                                                <span class="onsale">{% trans "Sale!" %} </span>
                                                 <div class="product-action">
                                                     <ul>
                                                         <li><a href="#open-modal" data-bs-toggle="modal" title="Quick view"><i class="fa fa-search"></i></a></li>

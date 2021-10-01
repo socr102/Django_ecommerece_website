@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div class = "container">
+	{% for cart in carts %}
+		{% if forloop.counter == 0 %}
+			<div class = "row">
+		{% endif %}
+			<div class = "col-sm-2">	
+				<div class="card" style="width: 18rem;">
+				  <img class="card-img-top" src="{% static 'img/basket/pngegg.png' %}" alt="Logo" style="width:10em;height:8em">
+				  <div class="card-body" style="text-align:center;background-color: black;color:white">
+				    <h5 class="card-title">Card</h5>
+				    <p class="card-text">Click here to show buy's cart</p>
+				    <a href="/viewcart/{{cart.user_id}}" class="btn btn-primary">Go Cart</a>
+				  </div>
+				</div>
+			</div>
+		{% if forloop.counter == 0 %}
+			</div>
+		{% endif %}
+	{% endfor %}
+</div>
+
+{% endblock %}
