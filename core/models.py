@@ -204,6 +204,7 @@ class Cart(models.Model):
     received = models.BooleanField(default=False)
     refund_requested = models.BooleanField(default=False)
     refund_granted = models.BooleanField(default=False)
+    feed = models.BooleanField(default = False)
 
     def __str__(self):
         return self.user.username
@@ -212,10 +213,14 @@ class Cart(models.Model):
         total = 0
         for order_item in self.items.all():
             total = total + order_item.get_final_price()
+
         if self.coupon is not None:
             total -= self.coupon.amount
         return total
-
+    def get_fee(self):
+        return float(self.get_total()/10)
+    def get_total_price(self): 
+        return float(self.get_total()*1.1)
 
 class Address(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

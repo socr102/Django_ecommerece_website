@@ -46,80 +46,84 @@
   </div>
   <div class="row">
       <div class="col-lg-6 col-12">
-          <form action="#">
+         <!--  <form action="/checkout/" id = "order" method="post">
+              {% csrf_token %}
               <div class="checkbox-form">
                   <h3>{% trans "Billing Details" %}</h3>
                   <div class="row">
-                    <div class="col-md-6">
+                      <div class="col-md-6">
                           <div class="checkout-form-list">
                               <label>{% trans "First Name" %} <span class="required">*</span></label>
-                              <input placeholder="" type="text">
+                              <input placeholder="" type="text" class="form-control" required>
                           </div>
                       </div>
                       <div class="col-md-6">
                           <div class="checkout-form-list">
                               <label>{% trans "Last Name" %} <span class="required">*</span></label>
-                              <input placeholder="" type="text">
+                              <input placeholder="" type="text"class="form-control" required>
                           </div>
                       </div>
                       <div class="col-md-12">
                           <div class="checkout-form-list">
                               <label>{% trans "Address" %} <span class="required">*</span></label>
-                              <input placeholder="Street address" type="text">
+                              <input placeholder="Street address" type="text"class="form-control" required>
                           </div>
                       </div>
                       <div class="col-md-12">
                           <div class="checkout-form-list">
-                              <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
+                              <input placeholder="Apartment, suite, unit etc. (optional)" type="text"class="form-control" required>
                           </div>
                       </div>
                       <div class="col-md-12">
                           <div class="country-select clearfix wrapper">
                               {% get_countries as countries %}
                               <label>{% trans "Country" %} <span class="required">*</span></label>
-                              <!-- <div class="country"> -->
-                                <select class="wide"size="5" >
+                                <select class="wide"size="5"class="form-control" required >
                                       {% for country in countries %}
                                       <option value="{{ country.code }}">{{ country.name }}</option>
                                   {% endfor %}
                                 </select>
-                              <!-- </div>   -->
                           </div>
                       </div>
 
                       <div class="col-md-6">
                           <div class="checkout-form-list">
                               <label>{% trans "Postcode / Zip" %}<span class="required">*</span></label>
-                              <input placeholder="30000" type="text">
+                              <input placeholder="30000" type="text" class="form-control" required>
                           </div>
                       </div>
 
+                  </div>
+                  <div class="order-button-payment">
+                      <div class="order-button-payment">
+                          <input value="Place order" type="submit" form = "order">
+                      </div>
                   </div>
                   <div class="different-address">
                       <div class="ship-different-title">
                           <h3>
                                   <label>{% trans "Ship to a different address?" %}</label>
-                                  <input id="ship-box" type="checkbox">
+                                  <input id="ship-box" type="checkbox" >
                               </h3>
                       </div>
                       <div id="ship-box-info" class="row">
                               <div class="col-md-6">
                                   <div class="checkout-form-list">
                                       <label>{% trans "First Name" %} <span class="required">*</span></label>
-                                      <input placeholder="" type="text">
+                                      <input placeholder="" type="text"class="form-control">
                                   </div>
                               </div>
                               <div class="col-md-6">
                                   <div class="checkout-form-list">
                                       <label>{% trans "Last Name" %}<span class="required">*</span></label>
-                                      <input placeholder="" type="text">
+                                      <input placeholder="" type="text"class="form-control">
                                   </div>
                               </div>
                               <div class="col-md-12">
                                 <div class="country-select clearfix">
                                     {% get_countries as countries %}
                                     <label>{% trans "Country" %} <span class="required">*</span></label>
-                                    <select class="wide">
+                                    <select class="wide"class="form-control">
                                           {% for country in countries %}
                                           <option value="{{ country.code }}">{{ country.name }}</option>
                                       {% endfor %}
@@ -129,30 +133,36 @@
                               <div class="col-md-12">
                                   <div class="checkout-form-list">
                                       <label>{% trans "Address" %} <span class="required">*</span></label>
-                                      <input placeholder="Street address" type="text">
+                                      <input placeholder="Street address" type="text"class="form-control">
                                   </div>
                               </div>
                               <div class="col-md-12">
                                   <div class="checkout-form-list">
-                                      <input placeholder="Apartment, suite, unit etc. (optional)" type="text">
+                                      <input placeholder="Apartment, suite, unit etc. (optional)" type="text"class="form-control">
                                   </div>
                               </div>
                               <div class="col-md-12">
                                   <div class="checkout-form-list">
                                       <label>{% trans "Postcode / Zip" %} <span class="required">*</span></label>
-                                      <input placeholder="" type="text">
+                                      <input placeholder="" type="text"class="form-control">
                                   </div>
                               </div>
                       </div>
                       <div class="order-notes">
                           <div class="checkout-form-list">
                               <label>{% trans "Order Notes" %}</label>
-                              <textarea id="checkout-mess" cols="30" rows="10" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
+                              <textarea id="checkout-mess" cols="30" rows="10"class="form-control" placeholder="Notes about your order, e.g. special notes for delivery."></textarea>
                           </div>
                       </div>
                   </div>
               </div>
-          </form>
+          </form> -->
+          <form action="/checkout/" id = "order" method="post">
+            {% csrf_token %}
+            <table>
+              {{form}}
+            </table>
+          <form>
       </div>
       <div class="col-lg-6 col-12">
           <div class="your-order">
@@ -179,9 +189,13 @@
                               <th>{% trans "Cart Subtotal" %}</th>
                               <td><span class="amount">{{orders.get_total}}$</span></td>
                           </tr>
+                          <tr class="cart-subtotal">
+                              <th>{% trans "Shipping fee" %}</th>
+                              <td><span class="amount">{{orders.get_fee}}$</span></td>
+                          </tr>
                           <tr class="order-total">
                               <th>Order Total</th>
-                              <td><strong><span class="amount">{{orders.get_total}}$</span></strong></td>
+                              <td><strong><span class="amount">{{orders.get_total_price}}$</span></strong></td>
                           </tr>
                       </tfoot>
                   </table>
@@ -236,7 +250,7 @@
                           </div>
                           <div class="order-button-payment">
                               <div class="order-button-payment">
-                                  <input value="Place order" type="submit">
+                                  <input value="Place order" type="submit" form = "order">
                               </div>
                           </div>
                   </div>

@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'core',
     'django_countries',
     'crispy_forms',
+    'paypal.standard.ipn',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -167,3 +168,7 @@ SSLC_STORE_PASSWORD = config('SSLC_STORE_PASSWORD')
 
 ClientID = "ASxcA_c7DZvRV-hV3tOHohr1olWY5vVlL0OQNXaO2hJsGRz8QFQvbVH29wjN5bF04uJyXl4qVNAW28Au"
 Secret = "EDk9pMXKh-XtT_uim4233ExyGNYrwKIgEaikc6zpWVTHMXnKCoos66_HZfPPRlImoqKE8njCf6KQSvpc"
+
+PAYPAL_RECEIVER_EMAIL = 'Abudla@gmail.com'
+
+PAYPAL_TEST = True

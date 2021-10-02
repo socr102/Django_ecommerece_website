@@ -12,3 +12,4 @@ selenium
 pandas
 mysql-connector
 django-paypal
+pytz==2018.7

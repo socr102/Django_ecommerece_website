@@ -21,7 +21,7 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 import requests
 from decimal import Decimal
 from sslcommerz_python.payment import SSLCSession
-
+from paypal.standard.forms import PayPalPaymentsForm
 from .forms import CheckoutForm, CouponForm, RefundForm, CommentForm
 from .models import *
 
@@ -270,6 +270,8 @@ class CheckoutView(LoginRequiredMixin, View):
 			if order_items.items.count() == 0:
 				messages.info(self.request, "No item in your cart")
 				return redirect("core:item_list")
+			# if order_items.feed == False:
+			# 	return 
 			context = {
 				'form': form,
 				"orders": order_items,
@@ -298,6 +300,9 @@ class CheckoutView(LoginRequiredMixin, View):
 				# Shipping Address Handling
 				set_default_shipping = form.cleaned_data.get('set_default_shipping')
 				use_default_shipping = form.cleaned_data.get('use_default_shipping')
+				print("use_default_shipping->",use_default_shipping)
+				print("set_default_shipping->",set_default_shipping)
+
 				if use_default_shipping:
 					shipping_qs = Address.objects.filter(
 						user=self.request.user,
@@ -386,7 +391,9 @@ class CheckoutView(LoginRequiredMixin, View):
 				if payment_option == "S":
 					return redirect("core:payment", payment_option="Stripe")
 				elif payment_option == "P":
-					return redirect("core:payment", payment_option="Paypal")
+					self.request.session['invocie'] = Cart.objects.get(user=self.request.user, ordered=False).id
+					self.request.session['total_price'] = Cart.objects.get(user=self.request.user, ordered=False).get_total_price()
+					return redirect("core:process-payment", payment_option="Paypal")
 				elif payment_option == "SSL":
 					return redirect("core:payment", payment_option="SSL")
 				else:
@@ -394,6 +401,7 @@ class CheckoutView(LoginRequiredMixin, View):
 					return redirect("core:checkout")
 		except ObjectDoesNotExist:
 			messages.error(self.request, "Error ")
+			print("error!!!")
 			return redirect("core:checkout")
 
 
@@ -730,3 +738,34 @@ def complete_payment(request, tran_id, payment_type):
 		order.save()
 	return HttpResponseRedirect(reverse('core:item_list'))
 
+
+def process_payment(request):
+    amount = request.session.get('total_price')
+    invoice = request.session.get('invoice')
+    host = request.get_host()
+
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': '%.2f' % amount.quantize(
+            Decimal('.01')),
+        'invoice': str(invoice),
+        'currency_code': 'USD',
+        'notify_url': 'http://{}{}'.format(host,
+                                           reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host,
+                                           reverse('payment_done')),
+        'cancel_return': 'http://{}{}'.format(host,
+                                              reverse('payment_cancelled')),
+    }
+
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, 'blog/make_payment.html', {'order': order, 'form': form})
+
+@csrf_exempt
+def payment_done(request):
+    return render(request, 'blog/payment_done.html')
+
+
+@csrf_exempt
+def payment_canceled(request):
+    return render(request, 'blog/payment_cancelled.html')
