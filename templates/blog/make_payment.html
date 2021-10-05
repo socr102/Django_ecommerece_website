@@ -1,8 +1,17 @@
-<!-- {% extends 'base.html' %} -->
+{% extends 'base.html' %}
 
 {% block title %}Make Payment{% endblock %}
 
 {% block content %}
-    <h4>Pay with PayPal</h4>
-    {{ form.render }}
+    <h4 style="text-align:center;">Pay with PayPal</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                {{ form.render }}
+            </div>
+            <div class="col-md-4"></div>
+
+        </div>
+    </div>
 {% endblock %}
