@@ -765,7 +765,8 @@ def process_payment(request):
 @csrf_exempt
 def payment_done(request):
     order_qs = Cart.objects.filter(user=request.user, ordered=False)
-    print(order_qs)
+    order_qs.ordered = True
+    order_qs.save()
     return render(request, 'blog/payment_done.html')
 
 
