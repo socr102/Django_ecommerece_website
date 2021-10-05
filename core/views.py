@@ -24,6 +24,7 @@ from sslcommerz_python.payment import SSLCSession
 from paypal.standard.forms import PayPalPaymentsForm
 from .forms import CheckoutForm, CouponForm, RefundForm, CommentForm
 from .models import *
+from decimal import *
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -393,7 +394,7 @@ class CheckoutView(LoginRequiredMixin, View):
 				elif payment_option == "P":
 					self.request.session['invocie'] = Cart.objects.get(user=self.request.user, ordered=False).id
 					self.request.session['total_price'] = Cart.objects.get(user=self.request.user, ordered=False).get_total_price()
-					return redirect("core:process-payment", payment_option="Paypal")
+					return redirect("core:process_payment")
 				elif payment_option == "SSL":
 					return redirect("core:payment", payment_option="SSL")
 				else:
@@ -746,20 +747,20 @@ def process_payment(request):
 
     paypal_dict = {
         'business': settings.PAYPAL_RECEIVER_EMAIL,
-        'amount': '%.2f' % amount.quantize(
+        'amount': '%.2f' % Decimal(amount).quantize(
             Decimal('.01')),
         'invoice': str(invoice),
         'currency_code': 'USD',
         'notify_url': 'http://{}{}'.format(host,
                                            reverse('paypal-ipn')),
         'return_url': 'http://{}{}'.format(host,
-                                           reverse('payment_done')),
+                                           reverse('core:payment_done')),
         'cancel_return': 'http://{}{}'.format(host,
-                                              reverse('payment_cancelled')),
+                                              reverse('core:payment_cancelled')),
     }
 
     form = PayPalPaymentsForm(initial=paypal_dict)
-    return render(request, 'blog/make_payment.html', {'order': order, 'form': form})
+    return render(request, 'blog/make_payment.html', {'form': form})
 
 @csrf_exempt
 def payment_done(request):
