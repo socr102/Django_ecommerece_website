@@ -768,6 +768,18 @@ def payment_done(request):
     for order in users_order:
         order.ordered = True
         order.save()
+    order_qs = Cart.objects.filter(user=request.user, ordered=False)
+    if order_qs.exists():
+        order = order_qs[0]
+        for item in order.items:
+            order_item = OrderItem.objects.filter(
+                item=item,
+                user=request.user,
+                ordered=True
+            )[0]
+            order.items.remove(order_item)
+            order_item.delete()
+
     return render(request, 'blog/payment_done.html')
 
 
