@@ -392,7 +392,7 @@ class CheckoutView(LoginRequiredMixin, View):
                 if payment_option == "S":
                     return redirect("core:payment", payment_option="Stripe")
                 elif payment_option == "P":
-                    self.request.session['invocie'] = Cart.objects.get(user=self.request.user, ordered=False).id
+                    self.request.session['invoice'] = Cart.objects.get(user=self.request.user, ordered=False).id
                     self.request.session['total_price'] = Cart.objects.get(user=self.request.user, ordered=False).get_total_price()
                     return redirect("core:process_payment")
                 elif payment_option == "SSL":
@@ -764,9 +764,10 @@ def process_payment(request):
 
 @csrf_exempt
 def payment_done(request):
-    order_qs = Cart.objects.filter(user=request.user, ordered=False)
-    order_qs.ordered = True
-    order_qs.save()
+    users_order = OrderItem.objects.filter(user=request.user, ordered=False)
+    for order in users_order:
+        order.ordered = True
+        order.save()
     return render(request, 'blog/payment_done.html')
 
 
